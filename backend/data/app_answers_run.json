@@ -1,0 +1,370 @@
+{
+  "generated_at": "2026-11-22T17:38:40+00:00",
+  "model": "llama3.2:3b",
+  "model_digest": "a80c4f17acd55265feec403c7aef86be0c25983ab279d83f3bcd3abbcb5b8b72",
+  "method": "multiple-choice pick, temperature 0, seed 7",
+  "system": "You are a clinical decision-support model taking a diagnostic multiple-choice assessment. Read the case and choose the single most likely diagnosis from the listed options.",
+  "cases": [
+    {
+      "id": 1,
+      "phase": 1,
+      "position": 1,
+      "prompt": "Case: A 58-year-old man who smokes presents with 40 minutes of crushing retrosternal chest pain radiating to the left arm, with sweating and nausea. BP 104/68 mmHg, HR 56/min. ECG shows ST elevation in leads II, III and aVF with reciprocal depression in I and aVL.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Acute inferior ST-elevation myocardial infarction\nB. Pulmonary embolism\nC. Acute pericarditis\nD. Acute aortic dissection\nE. Gastro-oesophageal reflux disease\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"A\"}",
+      "chosen_index": 0,
+      "app_answer": "Acute inferior ST-elevation myocardial infarction"
+    },
+    {
+      "id": 2,
+      "phase": 1,
+      "position": 2,
+      "prompt": "Case: A 26-year-old woman on the combined oral contraceptive pill develops sudden pleuritic chest pain and breathlessness a day after a 12-hour flight. HR 118/min, SpO2 91% on air, chest clear on auscultation. Her right calf is swollen and tender.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Community-acquired pneumonia\nB. Spontaneous pneumothorax\nC. Panic attack\nD. Pulmonary embolism\nE. Acute asthma exacerbation\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"D\"}",
+      "chosen_index": 3,
+      "app_answer": "Pulmonary embolism"
+    },
+    {
+      "id": 3,
+      "phase": 1,
+      "position": 3,
+      "prompt": "Case: A 19-year-old man with type 1 diabetes presents with vomiting, abdominal pain and deep sighing respirations after missing insulin doses during a viral illness. Capillary glucose 480 mg/dL, arterial pH 7.12, bicarbonate 9 mmol/L, urine ketones 3+.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Alcoholic ketoacidosis\nB. Acute pancreatitis\nC. Acute gastroenteritis\nD. Hyperosmolar hyperglycaemic state\nE. Diabetic ketoacidosis\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"E\"}",
+      "chosen_index": 4,
+      "app_answer": "Diabetic ketoacidosis"
+    },
+    {
+      "id": 4,
+      "phase": 1,
+      "position": 4,
+      "prompt": "Case: A 34-year-old man returned from a forested, mosquito-endemic area 10 days ago. He reports fever with rigors and drenching sweats recurring every 48 hours. Examination shows pallor and a palpable spleen. Hb 9.2 g/dL, platelets 96,000/µL.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Malaria\nB. Scrub typhus\nC. Enteric (typhoid) fever\nD. Dengue fever\nE. Leptospirosis\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"A\"}",
+      "chosen_index": 0,
+      "app_answer": "Malaria"
+    },
+    {
+      "id": 5,
+      "phase": 1,
+      "position": 5,
+      "prompt": "Case: A 67-year-old woman with atrial fibrillation, not on anticoagulation, develops sudden weakness of the right arm and face and difficulty producing words, beginning 1 hour ago. BP 168/94 mmHg, capillary glucose 112 mg/dL.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Acute ischaemic stroke (left middle cerebral artery territory)\nB. Hypoglycaemia\nC. Chronic subdural haematoma\nD. Bell's palsy\nE. Todd's paresis\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"A\"}",
+      "chosen_index": 0,
+      "app_answer": "Acute ischaemic stroke (left middle cerebral artery territory)"
+    },
+    {
+      "id": 6,
+      "phase": 1,
+      "position": 6,
+      "prompt": "Case: A 22-year-old man has periumbilical pain that has moved to the right iliac fossa over 12 hours, with anorexia and one episode of vomiting. Temperature 37.9 °C, tenderness and rebound at McBurney's point. WBC 14,200/µL.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Acute appendicitis\nB. Right ureteric colic\nC. Mesenteric adenitis\nD. Crohn's disease flare\nE. Meckel's diverticulitis\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"A\"}",
+      "chosen_index": 0,
+      "app_answer": "Acute appendicitis"
+    },
+    {
+      "id": 7,
+      "phase": 1,
+      "position": 7,
+      "prompt": "Case: A 45-year-old man presents with sudden, severe colicky left loin pain radiating to the groin. He is restless and cannot find a comfortable position. He is afebrile; urinalysis shows microscopic haematuria and no nitrites.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Left ureteric calculus\nB. Musculoskeletal back pain\nC. Leaking abdominal aortic aneurysm\nD. Renal cell carcinoma\nE. Acute pyelonephritis\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"A\"}",
+      "chosen_index": 0,
+      "app_answer": "Left ureteric calculus"
+    },
+    {
+      "id": 8,
+      "phase": 1,
+      "position": 8,
+      "prompt": "Case: A 30-year-old woman reports fatigue, breathlessness on stairs and craving ice. She has heavy menstrual periods. Examination shows pallor and spoon-shaped nails. Hb 8.5 g/dL, MCV 68 fL, serum ferritin 6 ng/mL.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Beta-thalassaemia trait\nB. Iron-deficiency anaemia\nC. Anaemia of chronic disease\nD. Vitamin B12 deficiency\nE. Sideroblastic anaemia\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"B\"}",
+      "chosen_index": 1,
+      "app_answer": "Iron-deficiency anaemia"
+    },
+    {
+      "id": 9,
+      "phase": 1,
+      "position": 9,
+      "prompt": "Case: A 35-year-old woman reports weight loss despite good appetite, heat intolerance, palpitations and tremor for 3 months. She has a diffuse goitre with a bruit and bilateral proptosis. TSH is suppressed and free T4 is raised.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Toxic multinodular goitre\nB. Graves' disease\nC. Hashimoto's thyroiditis\nD. Subacute (de Quervain) thyroiditis\nE. Phaeochromocytoma\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"B\"}",
+      "chosen_index": 1,
+      "app_answer": "Graves' disease"
+    },
+    {
+      "id": 10,
+      "phase": 1,
+      "position": 10,
+      "prompt": "Case: A 62-year-old man with a 40 pack-year smoking history has progressive exertional breathlessness and a productive cough every winter for the last 3 years. He has a hyperinflated chest. Post-bronchodilator FEV1/FVC is 0.58 with minimal reversibility.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Chronic obstructive pulmonary disease\nB. Chronic heart failure\nC. Bronchiectasis\nD. Bronchial asthma\nE. Idiopathic pulmonary fibrosis\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"A\"}",
+      "chosen_index": 0,
+      "app_answer": "Chronic obstructive pulmonary disease"
+    },
+    {
+      "id": 11,
+      "phase": 2,
+      "position": 1,
+      "prompt": "Case: A 72-year-old man with prior myocardial infarction wakes at night acutely breathless and has to sit upright. He has bibasal crackles, raised JVP, bilateral pitting ankle oedema and a third heart sound. NT-proBNP is markedly raised.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Nephrotic syndrome\nB. Community-acquired pneumonia\nC. Pulmonary embolism\nD. Acute decompensated heart failure\nE. COPD exacerbation\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"D\"}",
+      "chosen_index": 3,
+      "app_answer": "Acute decompensated heart failure"
+    },
+    {
+      "id": 12,
+      "phase": 2,
+      "position": 2,
+      "prompt": "Case: A 55-year-old hypertensive man has sudden severe tearing chest pain radiating to the back between the shoulder blades. BP is 182/100 mmHg in the right arm and 138/80 mmHg in the left. Chest X-ray shows a widened mediastinum.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. ST-elevation myocardial infarction\nB. Acute pericarditis\nC. Acute aortic dissection\nD. Pulmonary embolism\nE. Oesophageal rupture\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"C\"}",
+      "chosen_index": 2,
+      "app_answer": "Acute aortic dissection"
+    },
+    {
+      "id": 13,
+      "phase": 2,
+      "position": 3,
+      "prompt": "Case: A tall, thin 24-year-old man develops sudden right-sided pleuritic chest pain and breathlessness while sitting at his desk. The right hemithorax has reduced breath sounds and is hyper-resonant to percussion. SpO2 95%.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Primary spontaneous pneumothorax\nB. Pleural effusion\nC. Lobar pneumonia\nD. Pulmonary embolism\nE. Costochondritis\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"A\"}",
+      "chosen_index": 0,
+      "app_answer": "Primary spontaneous pneumothorax"
+    },
+    {
+      "id": 14,
+      "phase": 2,
+      "position": 4,
+      "prompt": "Case: Minutes after eating a peanut-containing snack, a 19-year-old woman develops lip swelling, generalised urticaria, wheeze and light-headedness. BP 80/50 mmHg, HR 128/min.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Vasovagal syncope\nB. Anaphylaxis\nC. Panic attack\nD. Hereditary angioedema\nE. Acute severe asthma\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"B\"}",
+      "chosen_index": 1,
+      "app_answer": "Anaphylaxis"
+    },
+    {
+      "id": 15,
+      "phase": 2,
+      "position": 5,
+      "prompt": "Case: A 40-year-old man with heavy alcohol use presents with severe epigastric pain radiating to the back, starting after a weekend binge, with repeated vomiting. He leans forward for relief. Serum lipase is five times the upper limit of normal.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Biliary colic\nB. Acute pancreatitis\nC. Acute gastritis\nD. Perforated peptic ulcer\nE. Inferior myocardial infarction\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"B\"}",
+      "chosen_index": 1,
+      "app_answer": "Acute pancreatitis"
+    },
+    {
+      "id": 16,
+      "phase": 2,
+      "position": 6,
+      "prompt": "Case: A 28-year-old man has had fever, severe headache, photophobia and vomiting for 12 hours. He has neck stiffness, a positive Kernig's sign and a non-blanching petechial rash on the legs. BP 96/60 mmHg.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Meningococcal meningitis with septicaemia\nB. Migraine with aura\nC. Viral meningitis\nD. Subarachnoid haemorrhage\nE. Dengue haemorrhagic fever\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"A\"}",
+      "chosen_index": 0,
+      "app_answer": "Meningococcal meningitis with septicaemia"
+    },
+    {
+      "id": 17,
+      "phase": 2,
+      "position": 7,
+      "prompt": "Case: A 50-year-old woman develops a sudden, severe 'worst-ever' headache while lifting weights, followed by a brief loss of consciousness. She now has neck stiffness and photophobia but no fever. GCS 14.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Subarachnoid haemorrhage\nB. Cluster headache\nC. Bacterial meningitis\nD. Hypertensive emergency\nE. Migraine\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"A\"}",
+      "chosen_index": 0,
+      "app_answer": "Subarachnoid haemorrhage"
+    },
+    {
+      "id": 18,
+      "phase": 2,
+      "position": 8,
+      "prompt": "Case: A 68-year-old man with type 2 diabetes on insulin is found confused, sweaty and tremulous after skipping lunch. HR 110/min, no focal neurological signs. Capillary glucose is 42 mg/dL.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Post-ictal state\nB. Acute ischaemic stroke\nC. Hypoglycaemia\nD. Alcohol intoxication\nE. Hyperosmolar hyperglycaemic state\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"C\"}",
+      "chosen_index": 2,
+      "app_answer": "Hypoglycaemia"
+    },
+    {
+      "id": 19,
+      "phase": 2,
+      "position": 9,
+      "prompt": "Case: A 33-year-old farmer is brought in after ingesting an unknown substance kept in the field shed. He has pinpoint pupils, profuse salivation, lacrimation, bronchorrhoea, bradycardia and muscle fasciculations.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Neurotoxic snake envenomation\nB. Organophosphate poisoning\nC. Paracetamol overdose\nD. Datura (anticholinergic) poisoning\nE. Opioid overdose\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"B\"}",
+      "chosen_index": 1,
+      "app_answer": "Organophosphate poisoning"
+    },
+    {
+      "id": 20,
+      "phase": 2,
+      "position": 10,
+      "prompt": "Case: A 75-year-old woman with two days of dysuria and frequency is now confused. Temperature 39.2 °C, HR 124/min, BP 82/50 mmHg despite 30 mL/kg IV fluids, serum lactate 4.5 mmol/L.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Anaphylactic shock\nB. Septic shock from a urinary source\nC. Adrenal crisis\nD. Hypovolaemic shock\nE. Cardiogenic shock\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"B\"}",
+      "chosen_index": 1,
+      "app_answer": "Septic shock from a urinary source"
+    },
+    {
+      "id": 21,
+      "phase": 3,
+      "position": 1,
+      "prompt": "Case: A 26-year-old woman had an episode of painful blurred vision in one eye two years ago that resolved. She now has numbness of both legs and electric-shock sensations down the spine on neck flexion. MRI shows periventricular white-matter lesions.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Functional neurological disorder\nB. Guillain–Barré syndrome\nC. Neuromyelitis optica spectrum disorder\nD. Multiple sclerosis\nE. Subacute combined degeneration (B12 deficiency)\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"D\"}",
+      "chosen_index": 3,
+      "app_answer": "Multiple sclerosis"
+    },
+    {
+      "id": 22,
+      "phase": 3,
+      "position": 2,
+      "prompt": "Case: A 35-year-old man develops symmetrical weakness starting in the legs and ascending over 5 days, two weeks after a diarrhoeal illness. Reflexes are absent. CSF shows raised protein with a normal cell count.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Botulism\nB. Myasthenia gravis\nC. Guillain–Barré syndrome\nD. Transverse myelitis\nE. Hypokalaemic periodic paralysis\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"C\"}",
+      "chosen_index": 2,
+      "app_answer": "Guillain–Barré syndrome"
+    },
+    {
+      "id": 23,
+      "phase": 3,
+      "position": 3,
+      "prompt": "Case: A 64-year-old man has a resting 'pill-rolling' tremor of the right hand, slowness of movement, cogwheel rigidity and a shuffling gait with reduced arm swing. He takes no regular medications.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Parkinson's disease\nB. Normal pressure hydrocephalus\nC. Drug-induced parkinsonism\nD. Wilson's disease\nE. Essential tremor\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"A\"}",
+      "chosen_index": 0,
+      "app_answer": "Parkinson's disease"
+    },
+    {
+      "id": 24,
+      "phase": 3,
+      "position": 4,
+      "prompt": "Case: A 45-year-old woman has generalised itching and fatigue for 6 months. Liver tests show a markedly raised alkaline phosphatase and GGT with normal bilirubin. Antimitochondrial antibody is strongly positive. Ultrasound shows no biliary dilatation.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Choledocholithiasis\nB. Autoimmune hepatitis\nC. Primary biliary cholangitis\nD. Drug-induced cholestasis\nE. Primary sclerosing cholangitis\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"C\"}",
+      "chosen_index": 2,
+      "app_answer": "Primary biliary cholangitis"
+    },
+    {
+      "id": 25,
+      "phase": 3,
+      "position": 5,
+      "prompt": "Case: A 52-year-old man with long-standing heavy alcohol use has jaundice, a distended abdomen with shifting dullness, spider naevi and palmar erythema. Albumin 2.4 g/dL, INR 1.9. Ultrasound shows a small nodular liver.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Right-sided heart failure\nB. Hepatocellular carcinoma\nC. Acute viral hepatitis\nD. Decompensated alcohol-related cirrhosis\nE. Budd–Chiari syndrome\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"D\"}",
+      "chosen_index": 3,
+      "app_answer": "Decompensated alcohol-related cirrhosis"
+    },
+    {
+      "id": 26,
+      "phase": 3,
+      "position": 6,
+      "prompt": "Case: A 23-year-old man has 3 months of diarrhoea with blood and mucus, urgency and tenesmus. Stool cultures are negative. Colonoscopy shows continuous mucosal inflammation extending from the rectum to the splenic flexure.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Colorectal carcinoma\nB. Crohn's disease\nC. Irritable bowel syndrome\nD. Ulcerative colitis\nE. Infectious colitis\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"D\"}",
+      "chosen_index": 3,
+      "app_answer": "Ulcerative colitis"
+    },
+    {
+      "id": 27,
+      "phase": 3,
+      "position": 7,
+      "prompt": "Case: A 30-year-old woman presents with puffiness around the eyes, generalised oedema and frothy urine. BP is normal. Urine protein is 5 g/24 h with no haematuria, serum albumin 2.1 g/dL and cholesterol is raised.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Congestive heart failure\nB. Liver cirrhosis\nC. Nephritic syndrome\nD. Hypothyroidism\nE. Nephrotic syndrome\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"E\"}",
+      "chosen_index": 4,
+      "app_answer": "Nephrotic syndrome"
+    },
+    {
+      "id": 28,
+      "phase": 3,
+      "position": 8,
+      "prompt": "Case: A 32-year-old woman has symmetrical small-joint pain in the hands, a photosensitive rash across the cheeks and nose, and painless oral ulcers. ANA and anti-dsDNA antibodies are positive and complement levels are low.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Psoriatic arthritis\nB. Viral (parvovirus) arthritis\nC. Systemic lupus erythematosus\nD. Dermatomyositis\nE. Rheumatoid arthritis\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"C\"}",
+      "chosen_index": 2,
+      "app_answer": "Systemic lupus erythematosus"
+    },
+    {
+      "id": 29,
+      "phase": 3,
+      "position": 9,
+      "prompt": "Case: A 55-year-old obese man wakes with excruciating pain, swelling and redness of the first metatarsophalangeal joint after a night of heavy eating and drinking. He is afebrile. He takes a thiazide diuretic.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Acute gout\nB. Cellulitis\nC. Pseudogout (CPPD)\nD. Septic arthritis\nE. Rheumatoid arthritis\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"A\"}",
+      "chosen_index": 0,
+      "app_answer": "Acute gout"
+    },
+    {
+      "id": 30,
+      "phase": 3,
+      "position": 10,
+      "prompt": "Case: A 48-year-old woman reports tiredness, weight gain, cold intolerance, constipation and dry skin. HR 54/min, with slow-relaxing ankle reflexes. TSH is markedly raised and free T4 is low. Anti-TPO antibodies are positive.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Iron-deficiency anaemia\nB. Secondary (central) hypothyroidism\nC. Cushing's syndrome\nD. Depression\nE. Primary hypothyroidism (Hashimoto's thyroiditis)\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"E\"}",
+      "chosen_index": 4,
+      "app_answer": "Primary hypothyroidism (Hashimoto's thyroiditis)"
+    },
+    {
+      "id": 31,
+      "phase": 4,
+      "position": 1,
+      "prompt": "Case: An 18-month-old child has a barking cough, hoarse voice and inspiratory stridor that is worse at night, following two days of runny nose and low-grade fever. The child is alert and not drooling.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Bacterial tracheitis\nB. Acute epiglottitis\nC. Foreign body aspiration\nD. Bronchiolitis\nE. Croup (laryngotracheobronchitis)\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"E\"}",
+      "chosen_index": 4,
+      "app_answer": "Croup (laryngotracheobronchitis)"
+    },
+    {
+      "id": 32,
+      "phase": 4,
+      "position": 2,
+      "prompt": "Case: A 6-month-old infant has two days of runny nose followed by cough, wheeze, fine crackles and fast breathing during winter. The infant is feeding poorly. SpO2 93%. There is no previous history of wheeze.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Congenital heart disease\nB. Pertussis\nC. Bacterial pneumonia\nD. Bronchiolitis\nE. Childhood asthma\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"D\"}",
+      "chosen_index": 3,
+      "app_answer": "Bronchiolitis"
+    },
+    {
+      "id": 33,
+      "phase": 4,
+      "position": 3,
+      "prompt": "Case: A 4-year-old child has had fever for 6 days, bilateral non-purulent conjunctival injection, red cracked lips, a strawberry tongue, unilateral cervical lymphadenopathy and swelling of the hands and feet.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Stevens–Johnson syndrome\nB. Kawasaki disease\nC. Toxic shock syndrome\nD. Scarlet fever\nE. Measles\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"B\"}",
+      "chosen_index": 1,
+      "app_answer": "Kawasaki disease"
+    },
+    {
+      "id": 34,
+      "phase": 4,
+      "position": 4,
+      "prompt": "Case: A 26-year-old woman with 7 weeks of amenorrhoea has lower abdominal pain on the left and vaginal spotting. Urine hCG is positive. Transvaginal ultrasound shows an empty uterus and a left adnexal mass with free fluid.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Ovarian torsion\nB. Ruptured corpus luteum cyst\nC. Ectopic pregnancy\nD. Pelvic inflammatory disease\nE. Threatened miscarriage\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"C\"}",
+      "chosen_index": 2,
+      "app_answer": "Ectopic pregnancy"
+    },
+    {
+      "id": 35,
+      "phase": 4,
+      "position": 5,
+      "prompt": "Case: A 32-year-old primigravida at 34 weeks' gestation reports severe headache and flashing lights. BP 164/110 mmHg, urine protein 3+, brisk reflexes and oedema of the face and hands. She has had no seizures.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Eclampsia\nB. Migraine\nC. Gestational hypertension\nD. Pre-eclampsia with severe features\nE. Cerebral venous sinus thrombosis\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"D\"}",
+      "chosen_index": 3,
+      "app_answer": "Pre-eclampsia with severe features"
+    },
+    {
+      "id": 36,
+      "phase": 4,
+      "position": 6,
+      "prompt": "Case: A 24-year-old woman has irregular periods since menarche, excess facial hair and acne. BMI 31 kg/m². Pelvic ultrasound shows multiple peripheral follicles in enlarged ovaries. Prolactin and TSH are normal.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Cushing's syndrome\nB. Non-classic congenital adrenal hyperplasia\nC. Hypothyroidism\nD. Polycystic ovary syndrome\nE. Androgen-secreting ovarian tumour\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"D\"}",
+      "chosen_index": 3,
+      "app_answer": "Polycystic ovary syndrome"
+    },
+    {
+      "id": 37,
+      "phase": 4,
+      "position": 7,
+      "prompt": "Case: A 28-year-old man has well-demarcated erythematous plaques with silvery scale over the extensor surfaces of the elbows and knees and in the scalp. He has pitting of the fingernails.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Tinea corporis\nB. Lichen planus\nC. Atopic dermatitis\nD. Seborrhoeic dermatitis\nE. Plaque psoriasis\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"E\"}",
+      "chosen_index": 4,
+      "app_answer": "Plaque psoriasis"
+    },
+    {
+      "id": 38,
+      "phase": 4,
+      "position": 8,
+      "prompt": "Case: A 38-year-old man has a 4-week cough with occasional blood-streaked sputum, evening fevers, night sweats and 6 kg weight loss. Chest X-ray shows a cavitating lesion in the right upper lobe.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Bronchogenic carcinoma\nB. Aspergilloma\nC. Community-acquired pneumonia\nD. Lung abscess\nE. Pulmonary tuberculosis\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"A\"}",
+      "chosen_index": 0,
+      "app_answer": "Bronchogenic carcinoma"
+    },
+    {
+      "id": 39,
+      "phase": 4,
+      "position": 9,
+      "prompt": "Case: During the monsoon, a 22-year-old woman has high fever, severe body aches, pain behind the eyes and a blanching rash on day 4 of illness. Platelets 60,000/µL and haematocrit is rising. NS1 antigen is positive.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Dengue fever\nB. Enteric (typhoid) fever\nC. Malaria\nD. Leptospirosis\nE. Chikungunya\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"A\"}",
+      "chosen_index": 0,
+      "app_answer": "Dengue fever"
+    },
+    {
+      "id": 40,
+      "phase": 4,
+      "position": 10,
+      "prompt": "Case: A 29-year-old woman reports 2 months of persistent low mood, loss of interest in activities, early-morning waking, poor concentration, feelings of guilt and weight loss. She has no history of elevated mood. Thyroid function is normal.\n\nQuestion: What is the most likely diagnosis?\n\nOptions:\nA. Generalised anxiety disorder\nB. Hypothyroidism\nC. Adjustment disorder\nD. Major depressive disorder\nE. Bipolar affective disorder\n\nReply with JSON only, in the form {\"answer\": \"<letter>\"}.",
+      "raw_reply": "{\"answer\": \"D\"}",
+      "chosen_index": 3,
+      "app_answer": "Major depressive disorder"
+    }
+  ],
+  "seconds": 187.4
+}

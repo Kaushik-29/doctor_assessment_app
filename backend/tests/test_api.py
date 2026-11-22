@@ -363,6 +363,7 @@ def test_admin_csv_exports(admin_app):
 def _bank_with_app_answers(tmp_path):
     bank = json.loads(QUESTIONS.read_text(encoding="utf-8"))
     for q in bank["questions"]:
+        q.pop("app_answer", None)
         if q["phase"] == 1 and q["position"] <= 5:
             q["app_answer"] = q["options"][0].upper() + "  "  # case/spacing should not matter
     path = tmp_path / "app_answers.json"

@@ -37,7 +37,8 @@
         "Acute pericarditis",
         "Acute aortic dissection",
         "Gastro-oesophageal reflux disease"
-      ]
+      ],
+      "app_answer": "Acute inferior ST-elevation myocardial infarction"
     },
     {
       "id": 2,
@@ -53,7 +54,8 @@
         "Panic attack",
         "Pulmonary embolism",
         "Acute asthma exacerbation"
-      ]
+      ],
+      "app_answer": "Pulmonary embolism"
     },
     {
       "id": 3,
@@ -69,7 +71,8 @@
         "Acute gastroenteritis",
         "Hyperosmolar hyperglycaemic state",
         "Diabetic ketoacidosis"
-      ]
+      ],
+      "app_answer": "Diabetic ketoacidosis"
     },
     {
       "id": 4,
@@ -85,7 +88,8 @@
         "Enteric (typhoid) fever",
         "Dengue fever",
         "Leptospirosis"
-      ]
+      ],
+      "app_answer": "Malaria"
     },
     {
       "id": 5,
@@ -101,7 +105,8 @@
         "Chronic subdural haematoma",
         "Bell's palsy",
         "Todd's paresis"
-      ]
+      ],
+      "app_answer": "Acute ischaemic stroke (left middle cerebral artery territory)"
     },
     {
       "id": 6,
@@ -117,7 +122,8 @@
         "Mesenteric adenitis",
         "Crohn's disease flare",
         "Meckel's diverticulitis"
-      ]
+      ],
+      "app_answer": "Acute appendicitis"
     },
     {
       "id": 7,
@@ -133,7 +139,8 @@
         "Leaking abdominal aortic aneurysm",
         "Renal cell carcinoma",
         "Acute pyelonephritis"
-      ]
+      ],
+      "app_answer": "Left ureteric calculus"
     },
     {
       "id": 8,
@@ -149,7 +156,8 @@
         "Anaemia of chronic disease",
         "Vitamin B12 deficiency",
         "Sideroblastic anaemia"
-      ]
+      ],
+      "app_answer": "Iron-deficiency anaemia"
     },
     {
       "id": 9,
@@ -165,7 +173,8 @@
         "Hashimoto's thyroiditis",
         "Subacute (de Quervain) thyroiditis",
         "Phaeochromocytoma"
-      ]
+      ],
+      "app_answer": "Graves' disease"
     },
     {
       "id": 10,
@@ -181,7 +190,8 @@
         "Bronchiectasis",
         "Bronchial asthma",
         "Idiopathic pulmonary fibrosis"
-      ]
+      ],
+      "app_answer": "Chronic obstructive pulmonary disease"
     },
     {
       "id": 11,
@@ -197,7 +207,8 @@
         "Pulmonary embolism",
         "Acute decompensated heart failure",
         "COPD exacerbation"
-      ]
+      ],
+      "app_answer": "Acute decompensated heart failure"
     },
     {
       "id": 12,
@@ -213,7 +224,8 @@
         "Acute aortic dissection",
         "Pulmonary embolism",
         "Oesophageal rupture"
-      ]
+      ],
+      "app_answer": "Acute aortic dissection"
     },
     {
       "id": 13,
@@ -229,7 +241,8 @@
         "Lobar pneumonia",
         "Pulmonary embolism",
         "Costochondritis"
-      ]
+      ],
+      "app_answer": "Primary spontaneous pneumothorax"
     },
     {
       "id": 14,
@@ -245,7 +258,8 @@
         "Panic attack",
         "Hereditary angioedema",
         "Acute severe asthma"
-      ]
+      ],
+      "app_answer": "Anaphylaxis"
     },
     {
       "id": 15,
@@ -261,7 +275,8 @@
         "Acute gastritis",
         "Perforated peptic ulcer",
         "Inferior myocardial infarction"
-      ]
+      ],
+      "app_answer": "Acute pancreatitis"
     },
     {
       "id": 16,
@@ -277,7 +292,8 @@
         "Viral meningitis",
         "Subarachnoid haemorrhage",
         "Dengue haemorrhagic fever"
-      ]
+      ],
+      "app_answer": "Meningococcal meningitis with septicaemia"
     },
     {
       "id": 17,
@@ -293,7 +309,8 @@
         "Bacterial meningitis",
         "Hypertensive emergency",
         "Migraine"
-      ]
+      ],
+      "app_answer": "Subarachnoid haemorrhage"
     },
     {
       "id": 18,
@@ -309,7 +326,8 @@
         "Hypoglycaemia",
         "Alcohol intoxication",
         "Hyperosmolar hyperglycaemic state"
-      ]
+      ],
+      "app_answer": "Hypoglycaemia"
     },
     {
       "id": 19,
@@ -325,7 +343,8 @@
         "Paracetamol overdose",
         "Datura (anticholinergic) poisoning",
         "Opioid overdose"
-      ]
+      ],
+      "app_answer": "Organophosphate poisoning"
     },
     {
       "id": 20,
@@ -341,7 +360,8 @@
         "Adrenal crisis",
         "Hypovolaemic shock",
         "Cardiogenic shock"
-      ]
+      ],
+      "app_answer": "Septic shock from a urinary source"
     },
     {
       "id": 21,
@@ -357,7 +377,8 @@
         "Neuromyelitis optica spectrum disorder",
         "Multiple sclerosis",
         "Subacute combined degeneration (B12 deficiency)"
-      ]
+      ],
+      "app_answer": "Multiple sclerosis"
     },
     {
       "id": 22,
@@ -373,7 +394,8 @@
         "Guillain–Barré syndrome",
         "Transverse myelitis",
         "Hypokalaemic periodic paralysis"
-      ]
+      ],
+      "app_answer": "Guillain–Barré syndrome"
     },
     {
       "id": 23,
@@ -389,7 +411,8 @@
         "Drug-induced parkinsonism",
         "Wilson's disease",
         "Essential tremor"
-      ]
+      ],
+      "app_answer": "Parkinson's disease"
     },
     {
       "id": 24,
@@ -405,7 +428,8 @@
         "Primary biliary cholangitis",
         "Drug-induced cholestasis",
         "Primary sclerosing cholangitis"
-      ]
+      ],
+      "app_answer": "Primary biliary cholangitis"
     },
     {
       "id": 25,
@@ -421,7 +445,8 @@
         "Acute viral hepatitis",
         "Decompensated alcohol-related cirrhosis",
         "Budd–Chiari syndrome"
-      ]
+      ],
+      "app_answer": "Decompensated alcohol-related cirrhosis"
     },
     {
       "id": 26,
@@ -437,7 +462,8 @@
         "Irritable bowel syndrome",
         "Ulcerative colitis",
         "Infectious colitis"
-      ]
+      ],
+      "app_answer": "Ulcerative colitis"
     },
     {
       "id": 27,
@@ -453,7 +479,8 @@
         "Nephritic syndrome",
         "Hypothyroidism",
         "Nephrotic syndrome"
-      ]
+      ],
+      "app_answer": "Nephrotic syndrome"
     },
     {
       "id": 28,
@@ -469,7 +496,8 @@
         "Systemic lupus erythematosus",
         "Dermatomyositis",
         "Rheumatoid arthritis"
-      ]
+      ],
+      "app_answer": "Systemic lupus erythematosus"
     },
     {
       "id": 29,
@@ -485,7 +513,8 @@
         "Pseudogout (CPPD)",
         "Septic arthritis",
         "Rheumatoid arthritis"
-      ]
+      ],
+      "app_answer": "Acute gout"
     },
     {
       "id": 30,
@@ -501,7 +530,8 @@
         "Cushing's syndrome",
         "Depression",
         "Primary hypothyroidism (Hashimoto's thyroiditis)"
-      ]
+      ],
+      "app_answer": "Primary hypothyroidism (Hashimoto's thyroiditis)"
     },
     {
       "id": 31,
@@ -517,7 +547,8 @@
         "Foreign body aspiration",
         "Bronchiolitis",
         "Croup (laryngotracheobronchitis)"
-      ]
+      ],
+      "app_answer": "Croup (laryngotracheobronchitis)"
     },
     {
       "id": 32,
@@ -533,7 +564,8 @@
         "Bacterial pneumonia",
         "Bronchiolitis",
         "Childhood asthma"
-      ]
+      ],
+      "app_answer": "Bronchiolitis"
     },
     {
       "id": 33,
@@ -549,7 +581,8 @@
         "Toxic shock syndrome",
         "Scarlet fever",
         "Measles"
-      ]
+      ],
+      "app_answer": "Kawasaki disease"
     },
     {
       "id": 34,
@@ -565,7 +598,8 @@
         "Ectopic pregnancy",
         "Pelvic inflammatory disease",
         "Threatened miscarriage"
-      ]
+      ],
+      "app_answer": "Ectopic pregnancy"
     },
     {
       "id": 35,
@@ -581,7 +615,8 @@
         "Gestational hypertension",
         "Pre-eclampsia with severe features",
         "Cerebral venous sinus thrombosis"
-      ]
+      ],
+      "app_answer": "Pre-eclampsia with severe features"
     },
     {
       "id": 36,
@@ -597,7 +632,8 @@
         "Hypothyroidism",
         "Polycystic ovary syndrome",
         "Androgen-secreting ovarian tumour"
-      ]
+      ],
+      "app_answer": "Polycystic ovary syndrome"
     },
     {
       "id": 37,
@@ -613,7 +649,8 @@
         "Atopic dermatitis",
         "Seborrhoeic dermatitis",
         "Plaque psoriasis"
-      ]
+      ],
+      "app_answer": "Plaque psoriasis"
     },
     {
       "id": 38,
@@ -629,7 +666,8 @@
         "Community-acquired pneumonia",
         "Lung abscess",
         "Pulmonary tuberculosis"
-      ]
+      ],
+      "app_answer": "Bronchogenic carcinoma"
     },
     {
       "id": 39,
@@ -645,7 +683,8 @@
         "Malaria",
         "Leptospirosis",
         "Chikungunya"
-      ]
+      ],
+      "app_answer": "Dengue fever"
     },
     {
       "id": 40,
@@ -661,7 +700,8 @@
         "Adjustment disorder",
         "Major depressive disorder",
         "Bipolar affective disorder"
-      ]
+      ],
+      "app_answer": "Major depressive disorder"
     }
   ]
 }

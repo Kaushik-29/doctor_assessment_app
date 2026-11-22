@@ -96,6 +96,10 @@ Add the application's diagnosis for each case as `"app_answer"` in `backend/data
   "app_answer": "Acute inferior ST-elevation myocardial infarction" }
 ```
 
+**The current `app_answer` values come from MedResolve's local model.** MedResolve's full consultation pipeline is designed not to name diagnoses (for these cases it gives emergency warnings or record-based information instead), so its output cannot be compared with a doctor's choice.
+`scripts/generate_app_answers.py` asks the same local model MedResolve uses (Ollama `llama3.2:3b`) to pick one listed option for each case, at temperature 0 with a fixed seed. Every prompt and raw reply is saved in `backend/data/app_answers_run.json`.
+To regenerate them (Ollama must be running), run `python scripts/generate_app_answers.py` from the `doctor_assessment_app` folder, then push.
+
 The admin page's **Doctor vs application** table then shows, for every saved answer: the doctor, the case, the doctor's answer, the application's answer, and **Agree** or **Differ**, with the overall agreement percentage. Filter it by doctor or by result.
 
 - Answers agree when the texts are the same, ignoring capital letters, spaces and punctuation. Use the exact option wording in `app_answer` so that picking that option counts as agreement. An *Other* answer is compared by its typed text, so a differently worded but equivalent diagnosis shows as **Differ**: check those by hand.
