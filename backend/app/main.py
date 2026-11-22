@@ -22,7 +22,7 @@ import bcrypt
 from fastapi import Depends, FastAPI, HTTPException, Request, Response
 from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field, field_validator
-from sqlalchemy import create_engine, event
+from sqlalchemy import create_engine, event, inspect, text as sql_text
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session, sessionmaker
 
@@ -138,6 +138,15 @@ def csv_cell(v) -> str:
     """Stringify for CSV and defuse spreadsheet formula injection in user-typed text."""
     s = "" if v is None else str(v)
     return "'" + s if s[:1] in ("=", "+", "-", "@", "\t", "\r") else s
+
+
+def _norm_dx(text: str) -> str:
+    return " ".join(re.sub(r"[^a-z0-9]+", " ", text.lower()).split())
+
+
+def same_diagnosis(a: str, b: str) -> bool:
+    """Doctor's and application's diagnoses agree (ignoring case, spacing and punctuation)."""
+    return bool(_norm_dx(a)) and _norm_dx(a) == _norm_dx(b)
 
 
 def csv_response(filename: str, header: list[str], rows: list[list]) -> Response:
@@ -284,6 +293,10 @@ def create_app(
 
     # Create tables
     Base.metadata.create_all(engine)
+    # Databases created before app_answer existed: add the column in place.
+    if "app_answer" not in {c["name"] for c in inspect(engine).get_columns("questions")}:
+        with engine.begin() as conn:
+            conn.execute(sql_text("ALTER TABLE questions ADD COLUMN app_answer TEXT DEFAULT ''"))
 
     # Load and synchronize assessment questions
     bank = load_bank(questions_path)
@@ -1119,21 +1132,15 @@ def create_app(
                 for r in doctor_rows(db)]
         return csv_response("doctors.csv", header, rows)
 
-    @app.get("/api/admin/export/answers.csv")
-    def admin_export_answers(_: None = Depends(require_admin), db: Session = Depends(get_db)):
+    def answer_records(db: Session) -> list[dict]:
+        """Every saved answer with the doctor's details and the application's answer for that case."""
         questions = {q.id: q for q in db.query(Question).all()}
         doctors = {d.id: d for d in db.query(Doctor).all()}
         subs = {(sub.doctor_id, sub.phase): sub for sub in db.query(PhaseSubmission).all()}
         answers = db.query(Answer).all()
         answers.sort(key=lambda a: (doctors[a.doctor_id].full_name.lower(), a.doctor_id,
                                     questions[a.question_id].phase, questions[a.question_id].position))
-        keyed = any(q.answer_index is not None for q in questions.values())
-        header = ["doctor_id", "full_name", "email", "specialty", "registration_number", "phase", "position",
-                  "question_id", "question_title", "question_specialty", "answer_type", "option_letter",
-                  "answer_text", "phase_submitted", "phase_submitted_at", "answered_at"]
-        if keyed:
-            header.append("matches_answer_key")
-        rows = []
+        out = []
         for a in answers:
             d, q = doctors[a.doctor_id], questions[a.question_id]
             sub = subs.get((d.id, q.phase))
@@ -1143,14 +1150,60 @@ def create_app(
                 idx = a.selected_index
                 ok = idx is not None and 0 <= idx < len(q.options)
                 kind, letter, text = "option", chr(65 + idx) if ok else "", q.options[idx] if ok else ""
-            row = [d.id, d.full_name, d.email, d.specialty, d.registration_number, q.phase, q.position, q.id,
-                   q.title, q.specialty, kind, letter, text, "yes" if sub else "no",
-                   iso(sub.submitted_at) if sub else "", iso(a.updated_at)]
-            if keyed:
-                row.append("" if q.answer_index is None else
-                           ("yes" if not a.is_other and a.selected_index == q.answer_index else "no"))
-            rows.append(row)
-        return csv_response("answers.csv", header, rows)
+            app_answer = q.app_answer or ""
+            out.append({
+                "doctor_id": d.id,
+                "full_name": d.full_name,
+                "email": d.email,
+                "specialty": d.specialty,
+                "registration_number": d.registration_number,
+                "phase": q.phase,
+                "position": q.position,
+                "question_id": q.id,
+                "question_title": q.title,
+                "question_specialty": q.specialty,
+                "answer_type": kind,
+                "option_letter": letter,
+                "answer_text": text,
+                "app_answer": app_answer,
+                # None = nothing to compare (no application answer, or blank Other)
+                "matches_app": (same_diagnosis(text, app_answer) if app_answer and text.strip() else None),
+                "phase_submitted": sub is not None,
+                "phase_submitted_at": iso(sub.submitted_at) if sub else None,
+                "answered_at": iso(a.updated_at),
+                "matches_answer_key": (None if q.answer_index is None else
+                                       (not a.is_other and a.selected_index == q.answer_index)),
+            })
+        return out
+
+    @app.get("/api/admin/comparison")
+    def admin_comparison(_: None = Depends(require_admin), db: Session = Depends(get_db)):
+        rows = answer_records(db)
+        compared = [r for r in rows if r["matches_app"] is not None]
+        return {
+            "app_answers_set": db.query(Question).filter(Question.app_answer != "").count(),
+            "total_questions": db.query(Question).count(),
+            "compared": len(compared),
+            "agreed": sum(1 for r in compared if r["matches_app"]),
+            "rows": [{k: r[k] for k in ("doctor_id", "full_name", "email", "phase", "position", "question_id",
+                                         "question_title", "answer_type", "option_letter", "answer_text",
+                                         "app_answer", "matches_app", "phase_submitted")} for r in rows],
+        }
+
+    @app.get("/api/admin/export/answers.csv")
+    def admin_export_answers(_: None = Depends(require_admin), db: Session = Depends(get_db)):
+        rows = answer_records(db)
+        keyed = db.query(Question).filter(Question.answer_index.isnot(None)).count() > 0
+        cols = ["doctor_id", "full_name", "email", "specialty", "registration_number", "phase", "position",
+                "question_id", "question_title", "question_specialty", "answer_type", "option_letter",
+                "answer_text", "app_answer", "matches_app", "phase_submitted", "phase_submitted_at", "answered_at"]
+        if keyed:
+            cols.append("matches_answer_key")
+
+        def cell(v):
+            return "" if v is None else ("yes" if v is True else "no" if v is False else v)
+
+        return csv_response("answers.csv", cols, [[cell(r[c]) for c in cols] for r in rows])
 
     @app.get("/api/health")
     def health():

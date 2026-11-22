@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useMemo, useState, type FormEvent } from 'react'
 import { Download, LogOut, RefreshCw, Search, ShieldCheck, Stethoscope } from 'lucide-react'
-import { api, ApiError, formatDate, type AdminDoctor, type AdminOverview } from '../api'
+import { api, ApiError, formatDate, type AdminComparison, type AdminDoctor, type AdminOverview } from '../api'
 import { Button, Spinner } from '../components/ui'
+import AnswerComparison from './AnswerComparison'
 
 type State = 'loading' | 'login' | 'ready' | 'unconfigured'
 
@@ -41,6 +42,7 @@ function DownloadLink({ href, label, hint }: { href: string; label: string; hint
 export default function AdminPage() {
   const [state, setState] = useState<State>('loading')
   const [data, setData] = useState<AdminOverview | null>(null)
+  const [comparison, setComparison] = useState<AdminComparison | null>(null)
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
@@ -48,7 +50,9 @@ export default function AdminPage() {
 
   const load = useCallback(async () => {
     try {
-      setData(await api.adminOverview())
+      const [overview, cmp] = await Promise.all([api.adminOverview(), api.adminComparison()])
+      setData(overview)
+      setComparison(cmp)
       setState('ready')
     } catch (err) {
       if (err instanceof ApiError && err.status === 503) setState('unconfigured')
@@ -200,7 +204,7 @@ export default function AdminPage() {
           <DownloadLink
             href="/api/admin/export/answers.csv"
             label="Download answers (CSV)"
-            hint="One row per doctor per question, with the chosen diagnosis"
+            hint="One row per doctor per question, with the doctor's and the application's answer"
           />
           <DownloadLink
             href="/api/admin/export/doctors.csv"
@@ -270,6 +274,8 @@ export default function AdminPage() {
             </div>
           )}
         </section>
+
+        {comparison && <AnswerComparison data={comparison} />}
       </main>
     </div>
   )

@@ -358,3 +358,59 @@ def test_admin_csv_exports(admin_app):
     r = a.get("/api/admin/export/doctors.csv")
     docs = list(csvmod.DictReader(io.StringIO(r.content.decode("utf-8-sig"))))
     assert len(docs) == 1 and docs[0]["phases_submitted"] == "1" and docs[0]["questions_answered"] == "11"
+
+
+def _bank_with_app_answers(tmp_path):
+    bank = json.loads(QUESTIONS.read_text(encoding="utf-8"))
+    for q in bank["questions"]:
+        if q["phase"] == 1 and q["position"] <= 5:
+            q["app_answer"] = q["options"][0].upper() + "  "  # case/spacing should not matter
+    path = tmp_path / "app_answers.json"
+    path.write_text(json.dumps(bank), encoding="utf-8")
+    return path
+
+
+def test_admin_comparison_with_app_answers(tmp_path):
+    import csv as csvmod
+    import io
+    app = create_app(database_url=f"sqlite:///{(tmp_path / 'c.db').as_posix()}",
+                     questions_path=_bank_with_app_answers(tmp_path), admin_password=ADMIN_PW)
+    d = new_client(app)
+    register(d)
+    qs = d.get("/api/phases/1").json()["questions"]
+    assert all("app_answer" not in q for q in qs)  # never sent to doctors
+    d.put(f"/api/answers/{qs[0]['id']}", json={"selected_index": 0})        # agrees
+    d.put(f"/api/answers/{qs[1]['id']}", json={"selected_index": 1})        # disagrees
+    d.put(f"/api/answers/{qs[2]['id']}", json={"is_other": True, "other_text": qs[2]["options"][0].lower() + "."})  # agrees
+    d.put(f"/api/answers/{qs[3]['id']}", json={"is_other": True, "other_text": ""})  # blank: not compared
+    d.put(f"/api/answers/{qs[6]['id']}", json={"selected_index": 0})        # no app answer: not compared
+
+    a = admin_client(app)
+    c = a.get("/api/admin/comparison").json()
+    assert c["app_answers_set"] == 5 and c["total_questions"] == 40
+    assert c["compared"] == 3 and c["agreed"] == 2
+    by_pos = {r["position"]: r for r in c["rows"]}
+    assert by_pos[1]["matches_app"] is True and by_pos[2]["matches_app"] is False
+    assert by_pos[3]["matches_app"] is True and by_pos[4]["matches_app"] is None
+    assert by_pos[7]["matches_app"] is None and by_pos[7]["app_answer"] == ""
+    assert by_pos[1]["app_answer"] == qs[0]["options"][0].upper()
+
+    rows = list(csvmod.DictReader(io.StringIO(a.get("/api/admin/export/answers.csv").content.decode("utf-8-sig"))))
+    assert [r["matches_app"] for r in rows] == ["yes", "no", "yes", "", ""]
+
+
+def test_comparison_requires_admin(admin_app):
+    assert new_client(admin_app).get("/api/admin/comparison").status_code == 401
+
+
+def test_existing_database_gets_app_answer_column(tmp_path):
+    import sqlite3
+    db = tmp_path / "old.db"
+    create_app(database_url=f"sqlite:///{db.as_posix()}", questions_path=QUESTIONS)
+    con = sqlite3.connect(db)  # simulate a database made before app_answer existed
+    con.execute("ALTER TABLE questions DROP COLUMN app_answer")
+    con.commit()
+    con.close()
+    app = create_app(database_url=f"sqlite:///{db.as_posix()}", questions_path=_bank_with_app_answers(tmp_path),
+                     admin_password=ADMIN_PW)
+    assert admin_client(app).get("/api/admin/comparison").json()["app_answers_set"] == 5

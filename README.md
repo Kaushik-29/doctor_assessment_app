@@ -23,7 +23,7 @@ It sits inside the MedResolve folder but shares no code or data with MedResolve 
 - **Review & Submit** at the end of each phase lists all ten answers and flags any that are missing or incomplete. Submitting needs all ten answers.
   It locks the phase in the database, unlocks the next phase with a short animation, and leaves locked phases viewable but read-only (the server rejects edits with 409).
 - **Progress and resume:** the overview shows an overall progress ring and a card for each phase (locked, active or submitted). When a doctor signs in again, the app reopens the exact case, or the review screen, they were last on.
-- **Admin page** at `/admin`, protected by one admin password: counts of registered, started and completed doctors, a searchable table of every doctor's progress, and **Download answers (CSV)** / **Download doctors (CSV)** buttons.
+- **Admin page** at `/admin`, protected by one admin password: counts of registered, started and completed doctors, a searchable table of every doctor's progress, a **Doctor vs application** table that puts each doctor's answer next to the application's answer for the same case, and **Download answers (CSV)** / **Download doctors (CSV)** buttons.
 - **Completion screen:** phases completed, questions answered, number of Other answers, completion time and a phase timeline.
   **No score is shown** unless you add an answer key (see below).
 
@@ -63,7 +63,7 @@ In Claude Code's preview, the launch configurations `doctor-assessment-api` and 
 cd D:\MedResolve\doctor_assessment_app\backend; python -m pytest -q
 ```
 
-There are 23 tests. They cover registration, login and logout (including server-side session invalidation), password hashing, auth required on every endpoint, per-doctor data isolation, autosave (create, change, Other drafts, clear), validation, locked-phase access, submit rules, locking after submit, unlocking the next phase, resume (including the review screen) after logout and login, the completion summary, the optional answer key, the login rate limit, serving the built frontend, and the admin page (password required, rate limit, overview, both CSV exports, spreadsheet formula escaping).
+There are 26 tests. They cover registration, login and logout (including server-side session invalidation), password hashing, auth required on every endpoint, per-doctor data isolation, autosave (create, change, Other drafts, clear), validation, locked-phase access, submit rules, locking after submit, unlocking the next phase, resume (including the review screen) after logout and login, the completion summary, the optional answer key, the login rate limit, serving the built frontend, and the admin page (password required, rate limit, overview, both CSV exports, spreadsheet formula escaping), the doctor-vs-application comparison, and upgrading an older database.
 
 ## Put it online so doctors can use a link
 
@@ -81,11 +81,27 @@ In production a single service runs everything: the FastAPI server also serves t
 Open `<your app URL>/admin` (for example `https://doctor-assessment.onrender.com/admin`) and sign in with the admin password.
 The page shows who has registered and how far each doctor has got, and has two download buttons:
 
-- **Answers CSV:** one row per doctor per question: doctor details, phase, question number and title, `answer_type` (`option`, `other`, or `other_blank` for an Other answer with no text yet), the option letter, the diagnosis text, whether that phase has been submitted, and when the answer was saved. With an answer key, a `matches_answer_key` column is added.
+- **Answers CSV:** one row per doctor per question: doctor details, phase, question number and title, `answer_type` (`option`, `other`, or `other_blank` for an Other answer with no text yet), the option letter, the diagnosis text, `app_answer` and `matches_app` (see below), whether that phase has been submitted, and when the answer was saved. With an answer key, a `matches_answer_key` column is added.
   Answers in phases a doctor has not submitted yet are included; filter on `phase_submitted = yes` for final answers only.
 - **Doctors CSV:** one row per doctor with registration, start and completion times, phases submitted and questions answered.
 
-Both open directly in Excel. Cells that start with `=`, `+`, `-` or `@` are prefixed with `'` so typed text cannot run as a spreadsheet formula.
+Both open directly in Excel.
+
+### Comparing doctors with the application
+
+Add the application's diagnosis for each case as `"app_answer"` in `backend/data/questions.json`, then push to GitHub (Render redeploys):
+
+```json
+{ "id": 1, "phase": 1, "position": 1, "title": "Chest pain in a smoker", "options": ["..."],
+  "app_answer": "Acute inferior ST-elevation myocardial infarction" }
+```
+
+The admin page's **Doctor vs application** table then shows, for every saved answer: the doctor, the case, the doctor's answer, the application's answer, and **Agree** or **Differ**, with the overall agreement percentage. Filter it by doctor or by result.
+
+- Answers agree when the texts are the same, ignoring capital letters, spaces and punctuation. Use the exact option wording in `app_answer` so that picking that option counts as agreement. An *Other* answer is compared by its typed text, so a differently worded but equivalent diagnosis shows as **Differ**: check those by hand.
+- Cases with no `app_answer`, and *Other* answers with no text yet, show as not compared.
+- `app_answer` is never sent to doctors. It is separate from `answer_index` (below), which also shows a score to doctors on their completion screen.
+- Answers marked *(draft)* are in a phase the doctor has not submitted yet. Cells that start with `=`, `+`, `-` or `@` are prefixed with `'` so typed text cannot run as a spreadsheet formula.
 
 Admin access:
 

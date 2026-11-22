@@ -61,6 +61,8 @@ class Question(Base):
     options: Mapped[list] = mapped_column(JSON)
     # Optional answer key (index into options). Never sent to the client.
     answer_index: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    # The application's own diagnosis for this case, for the admin comparison. Never sent to doctors.
+    app_answer: Mapped[str] = mapped_column(Text, default="")
 
 
 class Answer(Base):

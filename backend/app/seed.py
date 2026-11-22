@@ -38,6 +38,8 @@ def load_bank(path: Path) -> dict:
         ai = q.get("answer_index")
         if ai is not None and not 0 <= ai < len(q["options"]):
             raise QuestionBankError(f"Question {q['id']} answer_index out of range")
+        if not isinstance(q.get("app_answer", ""), str):
+            raise QuestionBankError(f"Question {q['id']} app_answer must be text")
     for p in range(1, PHASE_COUNT + 1):
         n = sum(1 for q in questions if q["phase"] == p)
         if n != QUESTIONS_PER_PHASE:
@@ -58,5 +60,6 @@ def sync_questions(db: Session, bank: dict) -> None:
         row.prompt = q.get("prompt", "What is the most likely diagnosis?")
         row.options = list(q["options"])
         row.answer_index = q.get("answer_index")
+        row.app_answer = q.get("app_answer", "").strip()
         db.add(row)
     db.commit()

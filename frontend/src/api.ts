@@ -92,6 +92,30 @@ export type AdminOverview = {
   doctors: AdminDoctor[]
 }
 
+export type ComparisonRow = {
+  doctor_id: number
+  full_name: string
+  email: string
+  phase: number
+  position: number
+  question_id: number
+  question_title: string
+  answer_type: 'option' | 'other' | 'other_blank'
+  option_letter: string
+  answer_text: string
+  app_answer: string
+  matches_app: boolean | null
+  phase_submitted: boolean
+}
+
+export type AdminComparison = {
+  app_answers_set: number
+  total_questions: number
+  compared: number
+  agreed: number
+  rows: ComparisonRow[]
+}
+
 export class ApiError extends Error {
   status: number
   detail: unknown
@@ -163,6 +187,7 @@ export const api = {
   adminLogin: (password: string) => request<void>('POST', '/api/admin/login', { password }, { quiet401: true }),
   adminLogout: () => request<void>('POST', '/api/admin/logout', undefined, { quiet401: true }),
   adminOverview: () => request<AdminOverview>('GET', '/api/admin/overview', undefined, { quiet401: true }),
+  adminComparison: () => request<AdminComparison>('GET', '/api/admin/comparison', undefined, { quiet401: true }),
 }
 
 export function isComplete(a: Answer | null | undefined): boolean {
