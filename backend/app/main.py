@@ -6,7 +6,10 @@ Run from the backend/ folder:
 """
 from __future__ import annotations
 
+import csv
 import hashlib
+import hmac
+import io
 import os
 import re
 import secrets
@@ -43,6 +46,9 @@ COOKIE_NAME = "da_session"
 SESSION_DAYS = 7
 LOGIN_MAX_FAILURES = 10
 LOGIN_WINDOW_S = 15 * 60
+
+ADMIN_COOKIE = "da_admin"
+ADMIN_HOURS = 12
 
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 
@@ -92,6 +98,10 @@ class AnswerIn(BaseModel):
     other_text: str = Field(default="", max_length=500)
 
 
+class AdminLoginIn(BaseModel):
+    password: str = Field(max_length=200)
+
+
 class PositionIn(BaseModel):
     phase: int
     question_id: Optional[int] = None
@@ -122,6 +132,24 @@ def _token_hash(token: str) -> str:
 
 def iso(dt) -> Optional[str]:
     return dt.isoformat() + "Z" if dt else None
+
+
+def csv_cell(v) -> str:
+    """Stringify for CSV and defuse spreadsheet formula injection in user-typed text."""
+    s = "" if v is None else str(v)
+    return "'" + s if s[:1] in ("=", "+", "-", "@", "\t", "\r") else s
+
+
+def csv_response(filename: str, header: list[str], rows: list[list]) -> Response:
+    buf = io.StringIO()
+    w = csv.writer(buf)
+    w.writerow(header)
+    for r in rows:
+        w.writerow([csv_cell(v) for v in r])
+    # BOM so Excel reads UTF-8 (accented names etc.) correctly
+    return Response("\ufeff" + buf.getvalue(), media_type="text/csv; charset=utf-8",
+                    headers={"Content-Disposition": f'attachment; filename="{filename}"',
+                             "Cache-Control": "no-store"})
 
 
 def doctor_out(d: Doctor) -> dict:
@@ -170,8 +198,13 @@ def create_app(
     database_url: Optional[str] = None,
     questions_path: Optional[Path] = None,
     cookie_secure: Optional[bool] = None,
+    admin_password: Optional[str] = None,
 ) -> FastAPI:
+    if admin_password is None:
+        admin_password = os.environ.get("DA_ADMIN_PASSWORD", "")
 
+    if admin_password is None:
+        admin_password = os.environ.get("DA_ADMIN_PASSWORD", "")
     database_url = (
         database_url
         or os.environ.get("DA_DATABASE_URL")
@@ -1007,6 +1040,117 @@ def create_app(
     # ---------------------------------------------------------------
     # Health check
     # ---------------------------------------------------------------
+
+    # ------------------------------------------------------------------ admin
+    # Admin access is one password from DA_ADMIN_PASSWORD. The admin cookie holds
+    # "<expiry>.<hmac>" keyed on that password, so changing the password signs the admin out.
+    admin_failures: list[float] = []
+    admin_key = hashlib.sha256(("da-admin:" + admin_password).encode()).digest()
+    not_configured = "Admin access is not set up. Set the DA_ADMIN_PASSWORD environment variable."
+
+    def admin_sig(exp: str) -> str:
+        return hmac.new(admin_key, exp.encode(), hashlib.sha256).hexdigest()
+
+    def require_admin(request: Request) -> None:
+        if not admin_password:
+            raise HTTPException(503, not_configured)
+        exp, _, sig = request.cookies.get(ADMIN_COOKIE, "").partition(".")
+        if not (exp.isdigit() and hmac.compare_digest(sig, admin_sig(exp)) and int(exp) > time.time()):
+            raise HTTPException(401, "Admin sign-in required")
+
+    @app.post("/api/admin/login", status_code=204)
+    def admin_login(body: AdminLoginIn, response: Response):
+        if not admin_password:
+            raise HTTPException(503, not_configured)
+        now = time.monotonic()
+        admin_failures[:] = [t for t in admin_failures if now - t < LOGIN_WINDOW_S]
+        if len(admin_failures) >= LOGIN_MAX_FAILURES:
+            raise HTTPException(429, "Too many failed attempts. Please wait 15 minutes and try again.")
+        if not hmac.compare_digest(body.password.encode(), admin_password.encode()):
+            admin_failures.append(now)
+            raise HTTPException(401, "Incorrect admin password")
+        exp = str(int(time.time()) + ADMIN_HOURS * 3600)
+        response.set_cookie(ADMIN_COOKIE, f"{exp}.{admin_sig(exp)}", max_age=ADMIN_HOURS * 3600, httponly=True,
+                            secure=cookie_secure, samesite="strict", path="/api/admin")
+        response.status_code = 204
+        return response
+
+    @app.post("/api/admin/logout", status_code=204)
+    def admin_logout(response: Response):
+        response.delete_cookie(ADMIN_COOKIE, path="/api/admin")
+        response.status_code = 204
+        return response
+
+    def doctor_rows(db: Session) -> list[dict]:
+        doctors = db.query(Doctor).order_by(Doctor.created_at).all()
+        subs: dict[int, int] = {}
+        for sub in db.query(PhaseSubmission).all():
+            subs[sub.doctor_id] = subs.get(sub.doctor_id, 0) + 1
+        answered: dict[int, int] = {}
+        for a in db.query(Answer).all():
+            if a.is_complete:
+                answered[a.doctor_id] = answered.get(a.doctor_id, 0) + 1
+        return [{
+            **doctor_out(d),
+            "started_at": iso(d.started_at),
+            "completed_at": iso(d.completed_at),
+            "phases_submitted": subs.get(d.id, 0),
+            "questions_answered": answered.get(d.id, 0),
+        } for d in doctors]
+
+    @app.get("/api/admin/overview")
+    def admin_overview(_: None = Depends(require_admin), db: Session = Depends(get_db)):
+        rows = doctor_rows(db)
+        return {
+            "total_phases": PHASE_COUNT,
+            "total_questions": db.query(Question).count(),
+            "doctors": rows,
+            "registered": len(rows),
+            "started": sum(1 for r in rows if r["started_at"]),
+            "completed": sum(1 for r in rows if r["completed_at"]),
+        }
+
+    @app.get("/api/admin/export/doctors.csv")
+    def admin_export_doctors(_: None = Depends(require_admin), db: Session = Depends(get_db)):
+        header = ["doctor_id", "full_name", "email", "specialty", "registration_number", "registered_at",
+                  "started_at", "completed_at", "phases_submitted", "questions_answered"]
+        rows = [[r["id"], r["full_name"], r["email"], r["specialty"], r["registration_number"], r["created_at"],
+                 r["started_at"], r["completed_at"], r["phases_submitted"], r["questions_answered"]]
+                for r in doctor_rows(db)]
+        return csv_response("doctors.csv", header, rows)
+
+    @app.get("/api/admin/export/answers.csv")
+    def admin_export_answers(_: None = Depends(require_admin), db: Session = Depends(get_db)):
+        questions = {q.id: q for q in db.query(Question).all()}
+        doctors = {d.id: d for d in db.query(Doctor).all()}
+        subs = {(sub.doctor_id, sub.phase): sub for sub in db.query(PhaseSubmission).all()}
+        answers = db.query(Answer).all()
+        answers.sort(key=lambda a: (doctors[a.doctor_id].full_name.lower(), a.doctor_id,
+                                    questions[a.question_id].phase, questions[a.question_id].position))
+        keyed = any(q.answer_index is not None for q in questions.values())
+        header = ["doctor_id", "full_name", "email", "specialty", "registration_number", "phase", "position",
+                  "question_id", "question_title", "question_specialty", "answer_type", "option_letter",
+                  "answer_text", "phase_submitted", "phase_submitted_at", "answered_at"]
+        if keyed:
+            header.append("matches_answer_key")
+        rows = []
+        for a in answers:
+            d, q = doctors[a.doctor_id], questions[a.question_id]
+            sub = subs.get((d.id, q.phase))
+            if a.is_other:
+                kind, letter, text = ("other" if a.is_complete else "other_blank"), "", a.other_text
+            else:
+                idx = a.selected_index
+                ok = idx is not None and 0 <= idx < len(q.options)
+                kind, letter, text = "option", chr(65 + idx) if ok else "", q.options[idx] if ok else ""
+            row = [d.id, d.full_name, d.email, d.specialty, d.registration_number, q.phase, q.position, q.id,
+                   q.title, q.specialty, kind, letter, text, "yes" if sub else "no",
+                   iso(sub.submitted_at) if sub else "", iso(a.updated_at)]
+            if keyed:
+                row.append("" if q.answer_index is None else
+                           ("yes" if not a.is_other and a.selected_index == q.answer_index else "no"))
+            rows.append(row)
+        return csv_response("answers.csv", header, rows)
 
     @app.get("/api/health")
     def health():

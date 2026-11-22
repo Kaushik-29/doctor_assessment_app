@@ -270,3 +270,91 @@ def test_serves_built_frontend(tmp_path, monkeypatch):
     assert "nope" not in c.get("/..%2Fsecret.txt").text
     assert c.get("/api/does-not-exist").status_code == 404
     assert c.get("/api/health").json() == {"status": "ok"}
+
+
+# ---------------------------------------------------------------- admin
+ADMIN_PW = "admin-secret-99"
+
+
+@pytest.fixture
+def admin_app(tmp_path):
+    return create_app(database_url=f"sqlite:///{(tmp_path / 'a.db').as_posix()}", questions_path=QUESTIONS,
+                      admin_password=ADMIN_PW)
+
+
+def admin_client(app):
+    c = new_client(app)
+    assert c.post("/api/admin/login", json={"password": ADMIN_PW}).status_code == 204
+    return c
+
+
+def test_admin_disabled_without_password(app):
+    c = new_client(app)
+    assert c.post("/api/admin/login", json={"password": "anything"}).status_code == 503
+    assert c.get("/api/admin/overview").status_code == 503
+
+
+def test_admin_requires_correct_password(admin_app):
+    c = new_client(admin_app)
+    for url in ["/api/admin/overview", "/api/admin/export/answers.csv", "/api/admin/export/doctors.csv"]:
+        assert c.get(url).status_code == 401
+    assert c.post("/api/admin/login", json={"password": "wrong"}).status_code == 401
+    # a doctor session is not an admin session
+    register(c)
+    assert c.get("/api/admin/overview").status_code == 401
+    # forged cookie
+    c.cookies.set("da_admin", "9999999999.deadbeef", path="/api/admin")
+    assert c.get("/api/admin/overview").status_code == 401
+
+
+def test_admin_login_rate_limit(admin_app):
+    c = new_client(admin_app)
+    for _ in range(10):
+        assert c.post("/api/admin/login", json={"password": "wrong"}).status_code == 401
+    assert c.post("/api/admin/login", json={"password": ADMIN_PW}).status_code == 429
+
+
+def test_admin_overview_and_logout(admin_app):
+    d = new_client(admin_app)
+    register(d)
+    answer_all(d, 1)
+    d.post("/api/phases/1/submit")
+    register(new_client(admin_app), "b@example.com", "Dr B")
+    a = admin_client(admin_app)
+    ov = a.get("/api/admin/overview").json()
+    assert ov["registered"] == 2 and ov["started"] == 1 and ov["completed"] == 0
+    row = next(r for r in ov["doctors"] if r["email"] == "dr.a@example.com")
+    assert row["phases_submitted"] == 1 and row["questions_answered"] == 10
+    assert "password_hash" not in row
+    assert a.post("/api/admin/logout").status_code == 204
+    assert a.get("/api/admin/overview").status_code == 401
+
+
+def test_admin_csv_exports(admin_app):
+    import csv as csvmod
+    import io
+    d = new_client(admin_app)
+    register(d, name="=HYPERLINK(evil)")
+    answer_all(d, 1, other_on=2)
+    d.post("/api/phases/1/submit")
+    qid2 = phase_qids(d, 2)[0]
+    d.put(f"/api/answers/{qid2}", json={"selected_index": 1})
+    a = admin_client(admin_app)
+
+    r = a.get("/api/admin/export/answers.csv")
+    assert r.status_code == 200 and r.headers["content-type"].startswith("text/csv")
+    assert 'filename="answers.csv"' in r.headers["content-disposition"]
+    rows = list(csvmod.DictReader(io.StringIO(r.content.decode("utf-8-sig"))))
+    assert len(rows) == 11
+    assert rows[0]["full_name"] == "'=HYPERLINK(evil)"  # formula injection defused
+    other = [x for x in rows if x["answer_type"] == "other"]
+    assert len(other) == 1 and other[0]["answer_text"] == "Sarcoidosis"
+    first = rows[0]
+    q = d.get("/api/phases/1").json()["questions"][0]
+    assert first["option_letter"] == "A" and first["answer_text"] == q["options"][0]
+    assert first["phase_submitted"] == "yes" and rows[-1]["phase_submitted"] == "no"
+    assert "matches_answer_key" not in first
+
+    r = a.get("/api/admin/export/doctors.csv")
+    docs = list(csvmod.DictReader(io.StringIO(r.content.decode("utf-8-sig"))))
+    assert len(docs) == 1 and docs[0]["phases_submitted"] == "1" and docs[0]["questions_answered"] == "11"

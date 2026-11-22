@@ -23,6 +23,7 @@ It sits inside the MedResolve folder but shares no code or data with MedResolve 
 - **Review & Submit** at the end of each phase lists all ten answers and flags any that are missing or incomplete. Submitting needs all ten answers.
   It locks the phase in the database, unlocks the next phase with a short animation, and leaves locked phases viewable but read-only (the server rejects edits with 409).
 - **Progress and resume:** the overview shows an overall progress ring and a card for each phase (locked, active or submitted). When a doctor signs in again, the app reopens the exact case, or the review screen, they were last on.
+- **Admin page** at `/admin`, protected by one admin password: counts of registered, started and completed doctors, a searchable table of every doctor's progress, and **Download answers (CSV)** / **Download doctors (CSV)** buttons.
 - **Completion screen:** phases completed, questions answered, number of Other answers, completion time and a phase timeline.
   **No score is shown** unless you add an answer key (see below).
 
@@ -62,7 +63,7 @@ In Claude Code's preview, the launch configurations `doctor-assessment-api` and 
 cd D:\MedResolve\doctor_assessment_app\backend; python -m pytest -q
 ```
 
-There are 18 tests. They cover registration, login and logout (including server-side session invalidation), password hashing, auth required on every endpoint, per-doctor data isolation, autosave (create, change, Other drafts, clear), validation, locked-phase access, submit rules, locking after submit, unlocking the next phase, resume (including the review screen) after logout and login, the completion summary, the optional answer key, the login rate limit, and serving the built frontend.
+There are 23 tests. They cover registration, login and logout (including server-side session invalidation), password hashing, auth required on every endpoint, per-doctor data isolation, autosave (create, change, Other drafts, clear), validation, locked-phase access, submit rules, locking after submit, unlocking the next phase, resume (including the review screen) after logout and login, the completion summary, the optional answer key, the login rate limit, serving the built frontend, and the admin page (password required, rate limit, overview, both CSV exports, spreadsheet formula escaping).
 
 ## Put it online so doctors can use a link
 
@@ -72,8 +73,26 @@ In production a single service runs everything: the FastAPI server also serves t
 
 1. **Database (Neon, free):** sign up at https://neon.tech, create a project, and copy its connection string (`postgresql://...`).
 2. **Web service (Render, free):** sign up at https://render.com and choose **New → Blueprint**. Pick this GitHub repo; Render reads `render.yaml`.
-   When it asks for `DATABASE_URL`, paste the Neon connection string. Then deploy (the first build takes about 5 minutes).
+   When it asks for `DATABASE_URL`, paste the Neon connection string. For `DA_ADMIN_PASSWORD`, choose a long password for the admin page. Then deploy (the first build takes about 5 minutes).
 3. Share the Render URL (for example `https://doctor-assessment.onrender.com`) with the doctors.
+
+## Getting the doctors' answers
+
+Open `<your app URL>/admin` (for example `https://doctor-assessment.onrender.com/admin`) and sign in with the admin password.
+The page shows who has registered and how far each doctor has got, and has two download buttons:
+
+- **Answers CSV:** one row per doctor per question: doctor details, phase, question number and title, `answer_type` (`option`, `other`, or `other_blank` for an Other answer with no text yet), the option letter, the diagnosis text, whether that phase has been submitted, and when the answer was saved. With an answer key, a `matches_answer_key` column is added.
+  Answers in phases a doctor has not submitted yet are included; filter on `phase_submitted = yes` for final answers only.
+- **Doctors CSV:** one row per doctor with registration, start and completion times, phases submitted and questions answered.
+
+Both open directly in Excel. Cells that start with `=`, `+`, `-` or `@` are prefixed with `'` so typed text cannot run as a spreadsheet formula.
+
+Admin access:
+
+- Set the password with the `DA_ADMIN_PASSWORD` environment variable (on Render: the service's **Environment** tab; saving it restarts the service). If it is not set, the admin page is switched off.
+- An admin sign-in lasts 12 hours. Changing the password signs the admin out everywhere.
+- After 10 wrong admin passwords within 15 minutes, admin sign-in is refused for a while.
+- The CSV files contain doctors' names and emails. Store them securely.
 
 Notes:
 
@@ -125,8 +144,9 @@ Answer keys are never sent to the browser while a doctor is answering.
 - Environment variables (all optional):
   - `DA_DATABASE_URL` points to another database (default: `sqlite:///.../backend/data/assessment.db`).
   - `DA_QUESTIONS_PATH` points to another question file.
+  - `DA_ADMIN_PASSWORD` turns on the `/admin` page and sets its password.
   - `DA_COOKIE_SECURE=1` marks the session cookie `Secure`. Set it when serving over HTTPS.
-- Export the answers for analysis with any SQLite tool. The tables are `doctors`, `answers` (`selected_index` or `is_other`/`other_text`), `phase_submissions` and `questions`.
+- Export the answers from the `/admin` page, or query the database directly. The tables are `doctors`, `answers` (`selected_index` or `is_other`/`other_text`), `phase_submissions` and `questions`.
 
 ## Project layout
 
@@ -146,5 +166,6 @@ doctor_assessment_app/
       ├─ screens/Dashboard.tsx
       ├─ screens/PhaseWorkspace.tsx   # questions, autosave, review & submit
       ├─ screens/CompleteScreen.tsx
+      ├─ screens/AdminPage.tsx        # /admin: progress table and CSV downloads
       └─ components/                  # progress ring, modal, top bar, unlock overlay
 ```

@@ -76,6 +76,22 @@ export type Summary = {
   score: { correct: number; keyed_questions: number } | null
 }
 
+export type AdminDoctor = Doctor & {
+  started_at: string | null
+  completed_at: string | null
+  phases_submitted: number
+  questions_answered: number
+}
+
+export type AdminOverview = {
+  total_phases: number
+  total_questions: number
+  registered: number
+  started: number
+  completed: number
+  doctors: AdminDoctor[]
+}
+
 export class ApiError extends Error {
   status: number
   detail: unknown
@@ -144,6 +160,9 @@ export const api = {
   submitPhase: (n: number) =>
     request<{ phase: number; next_phase: number | null; completed: boolean }>('POST', `/api/phases/${n}/submit`),
   summary: () => request<Summary>('GET', '/api/summary'),
+  adminLogin: (password: string) => request<void>('POST', '/api/admin/login', { password }, { quiet401: true }),
+  adminLogout: () => request<void>('POST', '/api/admin/logout', undefined, { quiet401: true }),
+  adminOverview: () => request<AdminOverview>('GET', '/api/admin/overview', undefined, { quiet401: true }),
 }
 
 export function isComplete(a: Answer | null | undefined): boolean {

@@ -7,5 +7,7 @@ services:
     envVars:
       - key: DATABASE_URL
         sync: false   # paste your Neon (or other Postgres) connection string in the Render dashboard
+      - key: DA_ADMIN_PASSWORD
+        sync: false   # password for the /admin page (answers dashboard and CSV download)
       - key: DA_COOKIE_SECURE
         value: "1"
