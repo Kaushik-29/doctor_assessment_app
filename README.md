@@ -117,10 +117,11 @@ Admin access:
 Notes:
 
 - On Render's free plan the service sleeps after 15 minutes without visitors, and the first visit after that takes about 30–60 seconds to load. A paid plan removes this.
-- **Keep-awake:** `.github/workflows/keep-alive.yml` calls `/api/health` every 14 minutes from GitHub Actions so the app does not fall asleep, and it is free for public repositories.
-  It pings `https://doctor-assessment.onrender.com` unless you set a repository variable `APP_URL` (Settings → Secrets and variables → Actions → Variables).
-  To wake the app by hand, open the repo's **Actions** tab, choose **Keep app awake**, then **Run workflow**.
-  GitHub may start scheduled runs a few minutes late at busy times, so the app can still occasionally fall asleep. GitHub also pauses scheduled workflows in a repository with no commits for 60 days; re-enable it on the Actions tab.
+- **Keep-awake:** Render sleeps the free service after 15 minutes without a visit. Two things prevent that:
+  1. **An external uptime monitor (recommended, reliable).** Create a free monitor at https://uptimerobot.com (or https://cron-job.org) for `https://doctor-assessment.onrender.com/api/health`, as an HTTP(s) check every 5 minutes.
+  2. **GitHub Actions backup.** `.github/workflows/keep-alive.yml` asks GitHub to ping `/api/health` every 5 minutes. GitHub runs scheduled workflows on a best-effort basis, often late and sometimes skipped, so on its own it cannot guarantee the app stays awake.
+     To ping a different address, set a repository variable `APP_URL` (Settings → Secrets and variables → Actions → Variables). To wake the app by hand: **Actions** tab → **Keep app awake** → **Run workflow**.
+     GitHub pauses scheduled workflows in a repository with no commits for 60 days; re-enable it on the Actions tab.
   Running one free service around the clock uses about 744 of Render's 750 free instance hours a month, so do not run a second free service on the same Render account.
 - The tables are created and the questions are loaded automatically on start. Editing `questions.json` and pushing to GitHub redeploys the app with the updated questions.
 - The session cookie is marked `Secure` in production (`DA_COOKIE_SECURE=1`, set in the Dockerfile).

@@ -1,12 +1,15 @@
 # Keeps the Render free instance awake: Render sleeps a free web service after 15 minutes
-# without traffic, so this pings the health endpoint every 14 minutes.
+# without traffic, so this pings the health endpoint.
+# GitHub runs scheduled workflows on a best-effort basis: runs are often late or skipped, so this asks
+# for every 5 minutes (the shortest GitHub allows) to make a 15-minute gap unlikely. For a guaranteed
+# interval, also use an external uptime monitor (see README).
 # Change the address with a repository variable named APP_URL
 # (Settings -> Secrets and variables -> Actions -> Variables).
 name: Keep app awake
 
 on:
   schedule:
-    - cron: "*/14 * * * *"
+    - cron: "*/5 * * * *"
   workflow_dispatch: # "Run workflow" button on the Actions tab: wakes the app on demand
 
 permissions: {}
