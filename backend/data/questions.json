@@ -1,0 +1,667 @@
+{
+  "_notice": "SAMPLE CONTENT: illustrative demo cases written for this app. They must be reviewed or replaced by the team's clinical supervisor and are not validated assessment material. To enable scoring, add an \"answer_index\" (0-based index into options) to each question.",
+  "phases": [
+    {
+      "number": 1,
+      "title": "Core Clinical Reasoning",
+      "description": "Common presentations across internal medicine."
+    },
+    {
+      "number": 2,
+      "title": "Acute & Emergency Care",
+      "description": "Time-critical presentations in the emergency setting."
+    },
+    {
+      "number": 3,
+      "title": "Systems Medicine",
+      "description": "Neurology, hepatology, gastroenterology, nephrology and rheumatology."
+    },
+    {
+      "number": 4,
+      "title": "Women, Children & Community Health",
+      "description": "Paediatrics, obstetrics, gynaecology, dermatology, infectious disease and psychiatry."
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "phase": 1,
+      "position": 1,
+      "specialty": "Cardiology",
+      "title": "Chest pain in a smoker",
+      "vignette": "A 58-year-old man who smokes presents with 40 minutes of crushing retrosternal chest pain radiating to the left arm, with sweating and nausea. BP 104/68 mmHg, HR 56/min. ECG shows ST elevation in leads II, III and aVF with reciprocal depression in I and aVL.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Acute inferior ST-elevation myocardial infarction",
+        "Pulmonary embolism",
+        "Acute pericarditis",
+        "Acute aortic dissection",
+        "Gastro-oesophageal reflux disease"
+      ]
+    },
+    {
+      "id": 2,
+      "phase": 1,
+      "position": 2,
+      "specialty": "Respiratory",
+      "title": "Breathlessness after a long flight",
+      "vignette": "A 26-year-old woman on the combined oral contraceptive pill develops sudden pleuritic chest pain and breathlessness a day after a 12-hour flight. HR 118/min, SpO2 91% on air, chest clear on auscultation. Her right calf is swollen and tender.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Community-acquired pneumonia",
+        "Spontaneous pneumothorax",
+        "Panic attack",
+        "Pulmonary embolism",
+        "Acute asthma exacerbation"
+      ]
+    },
+    {
+      "id": 3,
+      "phase": 1,
+      "position": 3,
+      "specialty": "Endocrinology",
+      "title": "Vomiting in a young diabetic",
+      "vignette": "A 19-year-old man with type 1 diabetes presents with vomiting, abdominal pain and deep sighing respirations after missing insulin doses during a viral illness. Capillary glucose 480 mg/dL, arterial pH 7.12, bicarbonate 9 mmol/L, urine ketones 3+.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Alcoholic ketoacidosis",
+        "Acute pancreatitis",
+        "Acute gastroenteritis",
+        "Hyperosmolar hyperglycaemic state",
+        "Diabetic ketoacidosis"
+      ]
+    },
+    {
+      "id": 4,
+      "phase": 1,
+      "position": 4,
+      "specialty": "Infectious disease",
+      "title": "Fever after forest travel",
+      "vignette": "A 34-year-old man returned from a forested, mosquito-endemic area 10 days ago. He reports fever with rigors and drenching sweats recurring every 48 hours. Examination shows pallor and a palpable spleen. Hb 9.2 g/dL, platelets 96,000/µL.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Malaria",
+        "Scrub typhus",
+        "Enteric (typhoid) fever",
+        "Dengue fever",
+        "Leptospirosis"
+      ]
+    },
+    {
+      "id": 5,
+      "phase": 1,
+      "position": 5,
+      "specialty": "Neurology",
+      "title": "Sudden arm weakness",
+      "vignette": "A 67-year-old woman with atrial fibrillation, not on anticoagulation, develops sudden weakness of the right arm and face and difficulty producing words, beginning 1 hour ago. BP 168/94 mmHg, capillary glucose 112 mg/dL.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Acute ischaemic stroke (left middle cerebral artery territory)",
+        "Hypoglycaemia",
+        "Chronic subdural haematoma",
+        "Bell's palsy",
+        "Todd's paresis"
+      ]
+    },
+    {
+      "id": 6,
+      "phase": 1,
+      "position": 6,
+      "specialty": "General surgery",
+      "title": "Migrating abdominal pain",
+      "vignette": "A 22-year-old man has periumbilical pain that has moved to the right iliac fossa over 12 hours, with anorexia and one episode of vomiting. Temperature 37.9 °C, tenderness and rebound at McBurney's point. WBC 14,200/µL.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Acute appendicitis",
+        "Right ureteric colic",
+        "Mesenteric adenitis",
+        "Crohn's disease flare",
+        "Meckel's diverticulitis"
+      ]
+    },
+    {
+      "id": 7,
+      "phase": 1,
+      "position": 7,
+      "specialty": "Urology",
+      "title": "Colicky loin pain",
+      "vignette": "A 45-year-old man presents with sudden, severe colicky left loin pain radiating to the groin. He is restless and cannot find a comfortable position. He is afebrile; urinalysis shows microscopic haematuria and no nitrites.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Left ureteric calculus",
+        "Musculoskeletal back pain",
+        "Leaking abdominal aortic aneurysm",
+        "Renal cell carcinoma",
+        "Acute pyelonephritis"
+      ]
+    },
+    {
+      "id": 8,
+      "phase": 1,
+      "position": 8,
+      "specialty": "Haematology",
+      "title": "Fatigue and heavy periods",
+      "vignette": "A 30-year-old woman reports fatigue, breathlessness on stairs and craving ice. She has heavy menstrual periods. Examination shows pallor and spoon-shaped nails. Hb 8.5 g/dL, MCV 68 fL, serum ferritin 6 ng/mL.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Beta-thalassaemia trait",
+        "Iron-deficiency anaemia",
+        "Anaemia of chronic disease",
+        "Vitamin B12 deficiency",
+        "Sideroblastic anaemia"
+      ]
+    },
+    {
+      "id": 9,
+      "phase": 1,
+      "position": 9,
+      "specialty": "Endocrinology",
+      "title": "Weight loss and palpitations",
+      "vignette": "A 35-year-old woman reports weight loss despite good appetite, heat intolerance, palpitations and tremor for 3 months. She has a diffuse goitre with a bruit and bilateral proptosis. TSH is suppressed and free T4 is raised.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Toxic multinodular goitre",
+        "Graves' disease",
+        "Hashimoto's thyroiditis",
+        "Subacute (de Quervain) thyroiditis",
+        "Phaeochromocytoma"
+      ]
+    },
+    {
+      "id": 10,
+      "phase": 1,
+      "position": 10,
+      "specialty": "Respiratory",
+      "title": "Chronic cough in a smoker",
+      "vignette": "A 62-year-old man with a 40 pack-year smoking history has progressive exertional breathlessness and a productive cough every winter for the last 3 years. He has a hyperinflated chest. Post-bronchodilator FEV1/FVC is 0.58 with minimal reversibility.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Chronic obstructive pulmonary disease",
+        "Chronic heart failure",
+        "Bronchiectasis",
+        "Bronchial asthma",
+        "Idiopathic pulmonary fibrosis"
+      ]
+    },
+    {
+      "id": 11,
+      "phase": 2,
+      "position": 1,
+      "specialty": "Cardiology",
+      "title": "Night-time breathlessness",
+      "vignette": "A 72-year-old man with prior myocardial infarction wakes at night acutely breathless and has to sit upright. He has bibasal crackles, raised JVP, bilateral pitting ankle oedema and a third heart sound. NT-proBNP is markedly raised.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Nephrotic syndrome",
+        "Community-acquired pneumonia",
+        "Pulmonary embolism",
+        "Acute decompensated heart failure",
+        "COPD exacerbation"
+      ]
+    },
+    {
+      "id": 12,
+      "phase": 2,
+      "position": 2,
+      "specialty": "Cardiovascular",
+      "title": "Tearing chest pain",
+      "vignette": "A 55-year-old hypertensive man has sudden severe tearing chest pain radiating to the back between the shoulder blades. BP is 182/100 mmHg in the right arm and 138/80 mmHg in the left. Chest X-ray shows a widened mediastinum.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "ST-elevation myocardial infarction",
+        "Acute pericarditis",
+        "Acute aortic dissection",
+        "Pulmonary embolism",
+        "Oesophageal rupture"
+      ]
+    },
+    {
+      "id": 13,
+      "phase": 2,
+      "position": 3,
+      "specialty": "Respiratory",
+      "title": "Sudden pleuritic pain at rest",
+      "vignette": "A tall, thin 24-year-old man develops sudden right-sided pleuritic chest pain and breathlessness while sitting at his desk. The right hemithorax has reduced breath sounds and is hyper-resonant to percussion. SpO2 95%.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Primary spontaneous pneumothorax",
+        "Pleural effusion",
+        "Lobar pneumonia",
+        "Pulmonary embolism",
+        "Costochondritis"
+      ]
+    },
+    {
+      "id": 14,
+      "phase": 2,
+      "position": 4,
+      "specialty": "Emergency medicine",
+      "title": "Collapse after a snack",
+      "vignette": "Minutes after eating a peanut-containing snack, a 19-year-old woman develops lip swelling, generalised urticaria, wheeze and light-headedness. BP 80/50 mmHg, HR 128/min.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Vasovagal syncope",
+        "Anaphylaxis",
+        "Panic attack",
+        "Hereditary angioedema",
+        "Acute severe asthma"
+      ]
+    },
+    {
+      "id": 15,
+      "phase": 2,
+      "position": 5,
+      "specialty": "Gastroenterology",
+      "title": "Epigastric pain after a binge",
+      "vignette": "A 40-year-old man with heavy alcohol use presents with severe epigastric pain radiating to the back, starting after a weekend binge, with repeated vomiting. He leans forward for relief. Serum lipase is five times the upper limit of normal.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Biliary colic",
+        "Acute pancreatitis",
+        "Acute gastritis",
+        "Perforated peptic ulcer",
+        "Inferior myocardial infarction"
+      ]
+    },
+    {
+      "id": 16,
+      "phase": 2,
+      "position": 6,
+      "specialty": "Infectious disease",
+      "title": "Fever, headache and rash",
+      "vignette": "A 28-year-old man has had fever, severe headache, photophobia and vomiting for 12 hours. He has neck stiffness, a positive Kernig's sign and a non-blanching petechial rash on the legs. BP 96/60 mmHg.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Meningococcal meningitis with septicaemia",
+        "Migraine with aura",
+        "Viral meningitis",
+        "Subarachnoid haemorrhage",
+        "Dengue haemorrhagic fever"
+      ]
+    },
+    {
+      "id": 17,
+      "phase": 2,
+      "position": 7,
+      "specialty": "Neurology",
+      "title": "Thunderclap headache",
+      "vignette": "A 50-year-old woman develops a sudden, severe 'worst-ever' headache while lifting weights, followed by a brief loss of consciousness. She now has neck stiffness and photophobia but no fever. GCS 14.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Subarachnoid haemorrhage",
+        "Cluster headache",
+        "Bacterial meningitis",
+        "Hypertensive emergency",
+        "Migraine"
+      ]
+    },
+    {
+      "id": 18,
+      "phase": 2,
+      "position": 8,
+      "specialty": "Endocrinology",
+      "title": "Confusion in an insulin user",
+      "vignette": "A 68-year-old man with type 2 diabetes on insulin is found confused, sweaty and tremulous after skipping lunch. HR 110/min, no focal neurological signs. Capillary glucose is 42 mg/dL.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Post-ictal state",
+        "Acute ischaemic stroke",
+        "Hypoglycaemia",
+        "Alcohol intoxication",
+        "Hyperosmolar hyperglycaemic state"
+      ]
+    },
+    {
+      "id": 19,
+      "phase": 2,
+      "position": 9,
+      "specialty": "Toxicology",
+      "title": "Farmer found unwell",
+      "vignette": "A 33-year-old farmer is brought in after ingesting an unknown substance kept in the field shed. He has pinpoint pupils, profuse salivation, lacrimation, bronchorrhoea, bradycardia and muscle fasciculations.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Neurotoxic snake envenomation",
+        "Organophosphate poisoning",
+        "Paracetamol overdose",
+        "Datura (anticholinergic) poisoning",
+        "Opioid overdose"
+      ]
+    },
+    {
+      "id": 20,
+      "phase": 2,
+      "position": 10,
+      "specialty": "Critical care",
+      "title": "Hypotension with fever",
+      "vignette": "A 75-year-old woman with two days of dysuria and frequency is now confused. Temperature 39.2 °C, HR 124/min, BP 82/50 mmHg despite 30 mL/kg IV fluids, serum lactate 4.5 mmol/L.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Anaphylactic shock",
+        "Septic shock from a urinary source",
+        "Adrenal crisis",
+        "Hypovolaemic shock",
+        "Cardiogenic shock"
+      ]
+    },
+    {
+      "id": 21,
+      "phase": 3,
+      "position": 1,
+      "specialty": "Neurology",
+      "title": "Relapsing neurological symptoms",
+      "vignette": "A 26-year-old woman had an episode of painful blurred vision in one eye two years ago that resolved. She now has numbness of both legs and electric-shock sensations down the spine on neck flexion. MRI shows periventricular white-matter lesions.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Functional neurological disorder",
+        "Guillain–Barré syndrome",
+        "Neuromyelitis optica spectrum disorder",
+        "Multiple sclerosis",
+        "Subacute combined degeneration (B12 deficiency)"
+      ]
+    },
+    {
+      "id": 22,
+      "phase": 3,
+      "position": 2,
+      "specialty": "Neurology",
+      "title": "Ascending weakness",
+      "vignette": "A 35-year-old man develops symmetrical weakness starting in the legs and ascending over 5 days, two weeks after a diarrhoeal illness. Reflexes are absent. CSF shows raised protein with a normal cell count.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Botulism",
+        "Myasthenia gravis",
+        "Guillain–Barré syndrome",
+        "Transverse myelitis",
+        "Hypokalaemic periodic paralysis"
+      ]
+    },
+    {
+      "id": 23,
+      "phase": 3,
+      "position": 3,
+      "specialty": "Neurology",
+      "title": "Tremor and slowness",
+      "vignette": "A 64-year-old man has a resting 'pill-rolling' tremor of the right hand, slowness of movement, cogwheel rigidity and a shuffling gait with reduced arm swing. He takes no regular medications.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Parkinson's disease",
+        "Normal pressure hydrocephalus",
+        "Drug-induced parkinsonism",
+        "Wilson's disease",
+        "Essential tremor"
+      ]
+    },
+    {
+      "id": 24,
+      "phase": 3,
+      "position": 4,
+      "specialty": "Hepatology",
+      "title": "Itching and fatigue",
+      "vignette": "A 45-year-old woman has generalised itching and fatigue for 6 months. Liver tests show a markedly raised alkaline phosphatase and GGT with normal bilirubin. Antimitochondrial antibody is strongly positive. Ultrasound shows no biliary dilatation.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Choledocholithiasis",
+        "Autoimmune hepatitis",
+        "Primary biliary cholangitis",
+        "Drug-induced cholestasis",
+        "Primary sclerosing cholangitis"
+      ]
+    },
+    {
+      "id": 25,
+      "phase": 3,
+      "position": 5,
+      "specialty": "Hepatology",
+      "title": "Jaundice and abdominal swelling",
+      "vignette": "A 52-year-old man with long-standing heavy alcohol use has jaundice, a distended abdomen with shifting dullness, spider naevi and palmar erythema. Albumin 2.4 g/dL, INR 1.9. Ultrasound shows a small nodular liver.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Right-sided heart failure",
+        "Hepatocellular carcinoma",
+        "Acute viral hepatitis",
+        "Decompensated alcohol-related cirrhosis",
+        "Budd–Chiari syndrome"
+      ]
+    },
+    {
+      "id": 26,
+      "phase": 3,
+      "position": 6,
+      "specialty": "Gastroenterology",
+      "title": "Bloody diarrhoea",
+      "vignette": "A 23-year-old man has 3 months of diarrhoea with blood and mucus, urgency and tenesmus. Stool cultures are negative. Colonoscopy shows continuous mucosal inflammation extending from the rectum to the splenic flexure.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Colorectal carcinoma",
+        "Crohn's disease",
+        "Irritable bowel syndrome",
+        "Ulcerative colitis",
+        "Infectious colitis"
+      ]
+    },
+    {
+      "id": 27,
+      "phase": 3,
+      "position": 7,
+      "specialty": "Nephrology",
+      "title": "Swelling and frothy urine",
+      "vignette": "A 30-year-old woman presents with puffiness around the eyes, generalised oedema and frothy urine. BP is normal. Urine protein is 5 g/24 h with no haematuria, serum albumin 2.1 g/dL and cholesterol is raised.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Congestive heart failure",
+        "Liver cirrhosis",
+        "Nephritic syndrome",
+        "Hypothyroidism",
+        "Nephrotic syndrome"
+      ]
+    },
+    {
+      "id": 28,
+      "phase": 3,
+      "position": 8,
+      "specialty": "Rheumatology",
+      "title": "Joint pain and rash",
+      "vignette": "A 32-year-old woman has symmetrical small-joint pain in the hands, a photosensitive rash across the cheeks and nose, and painless oral ulcers. ANA and anti-dsDNA antibodies are positive and complement levels are low.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Psoriatic arthritis",
+        "Viral (parvovirus) arthritis",
+        "Systemic lupus erythematosus",
+        "Dermatomyositis",
+        "Rheumatoid arthritis"
+      ]
+    },
+    {
+      "id": 29,
+      "phase": 3,
+      "position": 9,
+      "specialty": "Rheumatology",
+      "title": "Painful big toe",
+      "vignette": "A 55-year-old obese man wakes with excruciating pain, swelling and redness of the first metatarsophalangeal joint after a night of heavy eating and drinking. He is afebrile. He takes a thiazide diuretic.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Acute gout",
+        "Cellulitis",
+        "Pseudogout (CPPD)",
+        "Septic arthritis",
+        "Rheumatoid arthritis"
+      ]
+    },
+    {
+      "id": 30,
+      "phase": 3,
+      "position": 10,
+      "specialty": "Endocrinology",
+      "title": "Tiredness and weight gain",
+      "vignette": "A 48-year-old woman reports tiredness, weight gain, cold intolerance, constipation and dry skin. HR 54/min, with slow-relaxing ankle reflexes. TSH is markedly raised and free T4 is low. Anti-TPO antibodies are positive.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Iron-deficiency anaemia",
+        "Secondary (central) hypothyroidism",
+        "Cushing's syndrome",
+        "Depression",
+        "Primary hypothyroidism (Hashimoto's thyroiditis)"
+      ]
+    },
+    {
+      "id": 31,
+      "phase": 4,
+      "position": 1,
+      "specialty": "Paediatrics",
+      "title": "Barking cough",
+      "vignette": "An 18-month-old child has a barking cough, hoarse voice and inspiratory stridor that is worse at night, following two days of runny nose and low-grade fever. The child is alert and not drooling.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Bacterial tracheitis",
+        "Acute epiglottitis",
+        "Foreign body aspiration",
+        "Bronchiolitis",
+        "Croup (laryngotracheobronchitis)"
+      ]
+    },
+    {
+      "id": 32,
+      "phase": 4,
+      "position": 2,
+      "specialty": "Paediatrics",
+      "title": "Wheezy infant",
+      "vignette": "A 6-month-old infant has two days of runny nose followed by cough, wheeze, fine crackles and fast breathing during winter. The infant is feeding poorly. SpO2 93%. There is no previous history of wheeze.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Congenital heart disease",
+        "Pertussis",
+        "Bacterial pneumonia",
+        "Bronchiolitis",
+        "Childhood asthma"
+      ]
+    },
+    {
+      "id": 33,
+      "phase": 4,
+      "position": 3,
+      "specialty": "Paediatrics",
+      "title": "Prolonged fever with red eyes",
+      "vignette": "A 4-year-old child has had fever for 6 days, bilateral non-purulent conjunctival injection, red cracked lips, a strawberry tongue, unilateral cervical lymphadenopathy and swelling of the hands and feet.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Stevens–Johnson syndrome",
+        "Kawasaki disease",
+        "Toxic shock syndrome",
+        "Scarlet fever",
+        "Measles"
+      ]
+    },
+    {
+      "id": 34,
+      "phase": 4,
+      "position": 4,
+      "specialty": "Obstetrics",
+      "title": "Pain and spotting in early pregnancy",
+      "vignette": "A 26-year-old woman with 7 weeks of amenorrhoea has lower abdominal pain on the left and vaginal spotting. Urine hCG is positive. Transvaginal ultrasound shows an empty uterus and a left adnexal mass with free fluid.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Ovarian torsion",
+        "Ruptured corpus luteum cyst",
+        "Ectopic pregnancy",
+        "Pelvic inflammatory disease",
+        "Threatened miscarriage"
+      ]
+    },
+    {
+      "id": 35,
+      "phase": 4,
+      "position": 5,
+      "specialty": "Obstetrics",
+      "title": "Headache in late pregnancy",
+      "vignette": "A 32-year-old primigravida at 34 weeks' gestation reports severe headache and flashing lights. BP 164/110 mmHg, urine protein 3+, brisk reflexes and oedema of the face and hands. She has had no seizures.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Eclampsia",
+        "Migraine",
+        "Gestational hypertension",
+        "Pre-eclampsia with severe features",
+        "Cerebral venous sinus thrombosis"
+      ]
+    },
+    {
+      "id": 36,
+      "phase": 4,
+      "position": 6,
+      "specialty": "Gynaecology",
+      "title": "Irregular periods and acne",
+      "vignette": "A 24-year-old woman has irregular periods since menarche, excess facial hair and acne. BMI 31 kg/m². Pelvic ultrasound shows multiple peripheral follicles in enlarged ovaries. Prolactin and TSH are normal.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Cushing's syndrome",
+        "Non-classic congenital adrenal hyperplasia",
+        "Hypothyroidism",
+        "Polycystic ovary syndrome",
+        "Androgen-secreting ovarian tumour"
+      ]
+    },
+    {
+      "id": 37,
+      "phase": 4,
+      "position": 7,
+      "specialty": "Dermatology",
+      "title": "Scaly plaques",
+      "vignette": "A 28-year-old man has well-demarcated erythematous plaques with silvery scale over the extensor surfaces of the elbows and knees and in the scalp. He has pitting of the fingernails.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Tinea corporis",
+        "Lichen planus",
+        "Atopic dermatitis",
+        "Seborrhoeic dermatitis",
+        "Plaque psoriasis"
+      ]
+    },
+    {
+      "id": 38,
+      "phase": 4,
+      "position": 8,
+      "specialty": "Infectious disease",
+      "title": "Chronic cough and weight loss",
+      "vignette": "A 38-year-old man has a 4-week cough with occasional blood-streaked sputum, evening fevers, night sweats and 6 kg weight loss. Chest X-ray shows a cavitating lesion in the right upper lobe.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Bronchogenic carcinoma",
+        "Aspergilloma",
+        "Community-acquired pneumonia",
+        "Lung abscess",
+        "Pulmonary tuberculosis"
+      ]
+    },
+    {
+      "id": 39,
+      "phase": 4,
+      "position": 9,
+      "specialty": "Infectious disease",
+      "title": "Fever with low platelets",
+      "vignette": "During the monsoon, a 22-year-old woman has high fever, severe body aches, pain behind the eyes and a blanching rash on day 4 of illness. Platelets 60,000/µL and haematocrit is rising. NS1 antigen is positive.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Dengue fever",
+        "Enteric (typhoid) fever",
+        "Malaria",
+        "Leptospirosis",
+        "Chikungunya"
+      ]
+    },
+    {
+      "id": 40,
+      "phase": 4,
+      "position": 10,
+      "specialty": "Psychiatry",
+      "title": "Persistent low mood",
+      "vignette": "A 29-year-old woman reports 2 months of persistent low mood, loss of interest in activities, early-morning waking, poor concentration, feelings of guilt and weight loss. She has no history of elevated mood. Thyroid function is normal.",
+      "prompt": "What is the most likely diagnosis?",
+      "options": [
+        "Generalised anxiety disorder",
+        "Hypothyroidism",
+        "Adjustment disorder",
+        "Major depressive disorder",
+        "Bipolar affective disorder"
+      ]
+    }
+  ]
+}

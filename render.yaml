@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: doctor-assessment
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: DATABASE_URL
+        sync: false   # paste your Neon (or other Postgres) connection string in the Render dashboard
+      - key: DA_COOKIE_SECURE
+        value: "1"
